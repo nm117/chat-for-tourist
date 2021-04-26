@@ -1,6 +1,9 @@
 <template>
   <div id="top-page">
+    <h2>Select area which you're interested in!</h2>
+
     <div class="top">
+      <!-- Flexbox1/4 -->
       <div class="map-japan">
         <img
           v-if="hoverHokkaidoOn"
@@ -149,23 +152,24 @@
         </map>
       </div>
 
+      <!-- Flexbox2/4 -->
       <div class="select-pref-left">
         <ul>
           <li
-            class="select-region hokkaido-title"
-            :class="{ tameshi: hoverHokkaidoOn === true }"
+            class="select-region"
+            :class="{ 'hover-map': hoverHokkaidoOn === true }"
             @mouseover="hoverHokkaido"
             @mouseleave="hoverOutHokkaido"
           >
-            <router-link to="/hokkaido">Hokkaido</router-link>
+            <router-link to="/hokkaido" class="hokkaido-title">Hokkaido</router-link>
           </li>
           <li
-            class="select-region tohoku-title"
-            :class="{ tameshi: hoverTohokuOn === true }"
+            class="select-region"
+            :class="{ 'hover-map': hoverTohokuOn === true }"
             @mouseover="hoverTohoku"
             @mouseleave="hoverOutTohoku"
           >
-            <router-link to="/tohoku">Tohoku</router-link>
+            <router-link to="/tohoku" class="tohoku-title">Tohoku</router-link>
           </li>
           <div class="select-prefs">
             <li><router-link to="/aomori">Aomori</router-link></li>
@@ -176,12 +180,12 @@
             <li><router-link to="/fukushima">Fukushima</router-link></li>
           </div>
           <li
-            class="select-region kanto-title"
-            :class="{ tameshi: hoverKantoOn === true }"
+            class="select-region"
+            :class="{ 'hover-map': hoverKantoOn === true }"
             @mouseover="hoverKanto"
             @mouseleave="hoverOutKanto"
           >
-            <router-link to="/kanto">Kanto</router-link>
+            <router-link to="/kanto" class="kanto-title">Kanto</router-link>
           </li>
           <div class="select-prefs">
             <li><router-link to="/tokyo">Tokyo</router-link></li>
@@ -194,15 +198,17 @@
           </div>
         </ul>
       </div>
+
+      <!-- Flexbox3/4 -->
       <div class="select-pref-center">
         <ul>
           <li
-            class="select-region chubu-title"
-            :class="{ tameshi: hoverChubuOn === true }"
+            class="select-region"
+            :class="{ 'hover-map': hoverChubuOn === true }"
             @mouseover="hoverChubu"
             @mouseleave="hoverOutChubu"
           >
-            <router-link to="/chubu">Chubu</router-link>
+            <router-link to="/chubu" class="chubu-title">Chubu</router-link>
           </li>
           <div class="select-prefs">
             <li><router-link to="/niigata">Niigata</router-link></li>
@@ -216,12 +222,12 @@
             <li><router-link to="/aichi">Aichi</router-link></li>
           </div>
           <li
-            class="select-region kinki-title"
-            :class="{ tameshi: hoverKinkiOn === true }"
+            class="select-region"
+            :class="{ 'hover-map': hoverKinkiOn === true }"
             @mouseover="hoverKinki"
             @mouseleave="hoverOutKinki"
           >
-            <router-link to="/kinki">Kinki</router-link>
+            <router-link to="/kinki" class="kinki-title">Kinki</router-link>
           </li>
           <div class="select-prefs">
             <li><router-link to="/osaka">Osaka</router-link></li>
@@ -234,15 +240,17 @@
           </div>
         </ul>
       </div>
+
+      <!-- Flexbox4/4 -->
       <div class="select-pref-right">
         <ul>
           <li
-            class="select-region chugoku-title"
-            :class="{ tameshi: hoverChugokuOn === true }"
+            class="select-region"
+            :class="{ 'hover-map': hoverChugokuOn === true }"
             @mouseover="hoverChugoku"
             @mouseleave="hoverOutChugoku"
           >
-            <router-link to="/chugoku">Chugoku</router-link>
+            <router-link to="/chugoku" class="chugoku-title">Chugoku</router-link>
           </li>
           <div class="select-prefs">
             <li><router-link to="/okayama">Okayama</router-link></li>
@@ -252,12 +260,12 @@
             <li><router-link to="/yamaguchi">Yamaguchi</router-link></li>
           </div>
           <li
-            class="select-region shikoku-title"
-            :class="{ tameshi: hoverShikokuOn === true }"
+            class="select-region"
+            :class="{ 'hover-map': hoverShikokuOn === true }"
             @mouseover="hoverShikoku"
             @mouseleave="hoverOutShikoku"
           >
-            <router-link to="/shikoku">Shikoku</router-link>
+            <router-link to="/shikoku" class="shikoku-title">Shikoku</router-link>
           </li>
           <div class="select-prefs">
             <li><router-link to="/kagawa">Kagawa</router-link></li>
@@ -266,12 +274,12 @@
             <li><router-link to="/kochi">Kochi</router-link></li>
           </div>
           <li
-            class="select-region kyushu-title"
-            :class="{ tameshi: hoverKyushuOn === true }"
+            class="select-region"
+            :class="{ 'hover-map': hoverKyushuOn === true }"
             @mouseover="hoverKyushu"
             @mouseleave="hoverOutKyushu"
           >
-            <router-link to="/kyushu">Kyushu</router-link>
+            <router-link to="/kyushu" class="kyushu-title">Kyushu</router-link>
           </li>
           <div class="select-prefs">
             <li><router-link to="/fukuoka">Fukuoka</router-link></li>
@@ -283,110 +291,17 @@
             <li><router-link to="/kagoshima">Kagoshima</router-link></li>
           </div>
           <li
-            class="select-region okinawa-title"
-            :class="{ tameshi: hoverOkinawaOn === true }"
+            class="select-region"
+            :class="{ 'hover-map': hoverOkinawaOn === true }"
             @mouseover="hoverOkinawa"
             @mouseleave="hoverOutOkinawa"
           >
-            <router-link to="/okinawa">Okinawa</router-link>
+            <router-link to="/okinawa" class="okinawa-title">Okinawa</router-link>
           </li>
         </ul>
       </div>
     </div>
   </div>
-  <!-- <div class="pulldownset"> -->
-  <!-- select area -->
-  <!-- Area
-  <select class="mainselect">
-      <option value="">Select area</option>
-      <option value="Hokkaido">Hokkaido</option>
-      <option value="Tohoku">Tohoku</option>
-      <option value="Kanto">Kanto</option>
-      <option value="Chubu">Chubu</option>
-      <option value="Kansai">Kansai</option>
-      <option value="Chugoku">Chugoku</option>
-      <option value="Shikoku">Shikoku</option>
-      <option value="Kyushu">Kyushu</option>
-      <option value="Okinawa">Okinawa</option>
-      <option value="No select">No select</option>
-  </select> -->
-
-  <!-- select pref in Hokkaido area-->
-  <!-- <select id="Hokkaido" class="subbox">
-    <option value="HK">Hokkaido</option>
-  </select> -->
-  <!-- select pref in Tohoku area-->
-  <!-- <select id="Tohoku" class="subbox">
-    <option value="TAO">Aomori</option>
-    <option value="TAK">Akita</option>
-    <option value="TI">Iwate</option>
-    <option value="TY">Yamagata</option>
-    <option value="TM">Miyagi</option>
-    <option value="TF">Fukushima</option>
-  </select> -->
-  <!-- select pref in Kanto area-->
-  <!-- <select id="Kanto" class="subbox">
-    <option value="KT">Tokyo</option>
-    <option value="KK">Kanagawa</option>
-    <option value="KC">Chiba</option>
-    <option value="KS">Saitama</option>
-    <option value="KI">Ibaraki</option>
-    <option value="KT">Tochigi</option>
-    <option value="KG">Gunma</option>
-  </select> -->
-  <!-- select pref in Chubu area-->
-  <!-- <select id="Chubu" class="subbox">
-    <option value="CNI">Niigata</option>
-    <option value="CNA">Nagano</option>
-    <option value="CYAM">Yamanashi</option>
-    <option value="CS">Shizuoka</option>
-    <option value="CG">Gifu</option>
-    <option value="CT">Toyama</option>
-    <option value="CI">Ishikawa</option>
-    <option value="CF">Fukui</option>
-    <option value="CA">Aichi</option>
-  </select> -->
-  <!-- select pref in Kansai area-->
-  <!-- <select id="Kansai" class="subbox">
-    <option value="KO">Osaka</option>
-    <option value="KK">Kyoto</option>
-    <option value="NK">Nara</option>
-    <option value="KH">Hyogo</option>
-    <option value="KS">Shiga</option>
-    <option value="KW">Wakayama</option>
-    <option value="KM">Mie</option>
-  </select> -->
-  <!-- select pref in Chugoku area-->
-  <!-- <select id="Chugoku" class="subbox">
-    <option value="CH">Hiroshima</option>
-    <option value="CO">Okayama</option>
-    <option value="CS">Shimane</option>
-    <option value="CT">Tottori</option>
-    <option value="CYAMAG">Yamaguchi</option>
-  </select> -->
-  <!-- select pref in Shikoku area-->
-  <!-- <select id="Shikoku" class="subbox">
-    <option value="ST">Tokushima</option>
-    <option value="SE">Ehime</option>
-    <option value="SK">Kanagawa</option>
-    <option value="SK">Kochi</option>
-  </select> -->
-  <!-- select pref in Kyushu area-->
-  <!-- <select id="Kyushu" class="subbox">
-    <option value="KF">Fukuoka</option>
-    <option value="KO">Oita</option>
-    <option value="KKU">Kumamoto</option>
-    <option value="KN">Nagasaki</option>
-    <option value="KM">Miyazaki</option>
-    <option value="KS">Saga</option>
-    <option value="KKA">Kagoshima</option>
-  </select>   -->
-  <!-- select pref in Okinawa area-->
-  <!-- <select id="Okinawa" class="subbox">
-    <option value="OK">Okinawa</option>
-  </select> -->
-  <!-- </div> -->
-  <!-- <button @click="createRoom">CREATE</button> -->
 </template>
 
 <script>
@@ -496,38 +411,41 @@ export default {
   padding-top: 7em;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  height: calc(100vh - 3.5em);
   background-image: url("~@/assets/sandybeach.svg"),
                     url("~@/assets/sandybeach2.svg");
   background-position: bottom;
   background-size: 100% auto;
   background-repeat: no-repeat;
+  height: auto;
+  /* height: calc(100vh - 3.5em); */
 }
 .top {
   margin: 0 10% 0 5%;
   display: flex;
   justify-content: space-around;
+  flex-wrap: wrap;
 }
 a {
   padding: 0 0.3em;
   transition: all 0.01s;
 }
-a:hover {
+a:hover:not(.hokkaido-title, .tohoku-title, .chubu-title, .kanto-title, .kinki-title, .chugoku-title, .shikoku-title, .kyushu-title, .okinawa-title) {
   filter: drop-shadow(5px 5px 10px #c93f47);
+}
+h2 {
+  margin-left: 5%;
 }
 /* 日本地図DOM */
 .map-japan {
   position: relative;
-  box-sizing: border-box;
 }
 /* 日本地図画像 */
 .img-japanmap {
-  /* width: 80%; */
   margin: 8% 18% auto 0;
 }
 .map-japan .map-btn {
   position: absolute;
-  box-sizing: border-box;
+  /* box-sizing: border-box; */
   padding: 0.2em auto;
   font-size: 1em;
   font-weight: bold;
@@ -540,7 +458,7 @@ a:hover {
   padding-left: 0.7em;
 }
 .select-region,
-.tameshi {
+.hover-map {
   font-size: 1.5em;
   font-style: italic;
   font-weight: bold;
@@ -550,7 +468,7 @@ a:hover {
   border-bottom: 1px solid;
   filter: none;
 }
-.tameshi {
+.hover-map {
   font-size: 1.5em;
   font-style: italic;
   font-weight: bold;
@@ -559,5 +477,33 @@ a:hover {
   display: block;
   border-bottom: 1px solid;
   filter: drop-shadow(5px 5px 10px #c93f47);
+}
+.map-japan, .select-pref-left, .select-pref-center {
+  width: 90%;
+}
+.select-pref-right {
+  width: 90%;
+  margin-bottom: 5em;
+}
+@media (min-width: 600px) {
+  #top-page {
+    height: auto;
+  }
+  .map-japan, .select-pref-left, .select-pref-center, .select-pref-right {
+  width: 90%;
+}
+}
+@media (min-width: 1025px) {
+  #top-page {
+    height: 100vh;
+  }
+  .map-japan {
+  width: auto;
+}
+  .select-pref-left, .select-pref-center, .select-pref-right {
+  margin-top: -3%;
+  width: auto;
+  margin-bottom: auto;
+}
 }
 </style>

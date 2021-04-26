@@ -61,6 +61,9 @@ const AuthModule = {
       var provider = new firebase.auth.GoogleAuthProvider();
       await firebase.auth().signInWithPopup(provider)
         .then(result => {
+          usersRef.doc(result.user.uid).set({
+            username: result.user.displayName,
+          })          
           commit('setUser', result);
           commit('setSignIn', true);
           console.log(result);

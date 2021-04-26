@@ -69,6 +69,7 @@ export default {
 
 <style>
 @import url('https://fonts.googleapis.com/css2?family=PT+Sans:ital,wght@1,700&display=swap');
+@import '~modern-css-reset';
 
 * {
   margin: 0px;
@@ -134,15 +135,15 @@ li {
 #prefecture {
   text-align: center;
 }
-#prefecture .pref-create {
+.pref-create {
   display: block;
   margin-bottom: 3em;
   text-decoration: underline;
 }
-#prefecture .pref-roomnames {
+.pref-roomnames {
   box-sizing: border-box;
   color: black;
-  width: 400px;
+  width: 90%;
   text-decoration: none;
   text-align: center;
   margin-bottom: 0.8em;
@@ -152,5 +153,33 @@ li {
   background: rgb(235, 235, 235);
   border-radius: 4px;
   line-height: 1.2em;
+}
+.room-roomnames {
+  color: black;
+  width: 90%;
+  text-decoration: none;
+  text-align: center;
+  margin-bottom: 0.8em;
+  display: inline-block;
+  padding: 0.8em;
+  background: rgb(235, 235, 235);
+  border-radius: 4px;
+  line-height: 1.2em;
+}
+@media (min-width: 600px) {
+.room-roomnames {
+  width: 500px;
+}
+.pref-roomnames {
+  width: 500px
+}
+}
+@media (min-width: 1025px) {
+.room-roomnames {
+  width: 500px;
+}
+.pref-roomnames {
+  width: 500px
+}
 }
 </style>

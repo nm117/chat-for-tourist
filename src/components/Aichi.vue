@@ -2,11 +2,13 @@
   <div id="prefecture">
     <div class="pref-aichi">
       <h1>Aichi</h1>
+
       <router-link
         :to="{ name: 'CreateRoom', params: { value: 'Aichi' } }"
         class="pref-create">
-        <b>+</b> Create your chatroom in Aichi page
+        Create your chatroom in Aichi page
       </router-link>
+
       <div v-for="(room, id) in rooms" :key="id" class="rooms">
         <router-link
           :to="{ name: 'Chat', params: { id: id } }"
@@ -44,9 +46,3 @@ export default {
   },
 };
 </script>
-
-<style scoped>
-.a {
-  width: 20px;
-}
-</style>

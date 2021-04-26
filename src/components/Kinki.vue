@@ -1,9 +1,36 @@
 <template>
   <div id="room-kinki">
     <h1>Kinki Region</h1>
-    <div v-for="(room, id) in rooms" :key="id" class="rooms">
+
+    <p><router-link to="/osaka" class="pref-link">▶︎ Osaka</router-link></p>
+    <div v-for="(room, id) in osakaRooms" :key="id" class="rooms">
       <router-link :to="{ name: 'Chat', params: { id: id }}" class="room-roomnames">{{ room.roomname }}</router-link>
     </div>
+    <p><router-link to="/kyoto" class="pref-link">▶︎ Kyoto</router-link></p>
+    <div v-for="(room, id) in kyotoRooms" :key="id" class="rooms">
+      <router-link :to="{ name: 'Chat', params: { id: id }}" class="room-roomnames">{{ room.roomname }}</router-link>
+    </div>
+    <p><router-link to="/hyogo" class="pref-link">▶︎ Hyogo</router-link></p>
+    <div v-for="(room, id) in hyogoRooms" :key="id" class="rooms">
+      <router-link :to="{ name: 'Chat', params: { id: id }}" class="room-roomnames">{{ room.roomname }}</router-link>
+    </div>
+    <p><router-link to="/nara" class="pref-link">▶︎ Nara</router-link></p>
+    <div v-for="(room, id) in naraRooms" :key="id" class="rooms">
+      <router-link :to="{ name: 'Chat', params: { id: id }}" class="room-roomnames">{{ room.roomname }}</router-link>
+    </div>
+    <p><router-link to="/shiga" class="pref-link">▶︎ Shiga</router-link></p>
+    <div v-for="(room, id) in shigaRooms" :key="id" class="rooms">
+      <router-link :to="{ name: 'Chat', params: { id: id }}" class="room-roomnames">{{ room.roomname }}</router-link>
+    </div>
+    <p><router-link to="/wakayama" class="pref-link">▶︎ Wakayama</router-link></p>
+    <div v-for="(room, id) in wakayamaRooms" :key="id" class="rooms">
+      <router-link :to="{ name: 'Chat', params: { id: id }}" class="room-roomnames">{{ room.roomname }}</router-link>
+    </div>
+    <p><router-link to="/mie" class="pref-link">▶︎ Mie</router-link></p>
+    <div v-for="(room, id) in mieRooms" :key="id" class="rooms">
+      <router-link :to="{ name: 'Chat', params: { id: id }}" class="room-roomnames">{{ room.roomname }}</router-link>
+    </div>
+
   </div>
 </template>
 
@@ -14,40 +41,81 @@
     name: "Room",
     data: function () {
       return {
-        rooms: {},
+        osakaRooms: {},
+        kyotoRooms: {},
+        hyogoRooms: {},
+        naraRooms: {},
+        shigaRooms: {},
+        wakayamaRooms: {},
+        mieRooms: {},
         roomsRef: null,
         newRoom: null,
       };
     },
     created() {
       this.roomsRef = firebase.firestore().collection("rooms").where("prefecture", "==", "Osaka", "Hyogo", "Nara", "Kyoto", "Shiga", "Wakayama", "Mie");
-      this.roomsRef.onSnapshot((querySnapshot) => {
-        const obj = {};
+
+      this.roomsRef.where("prefecture", "==", "Osaka").onSnapshot((querySnapshot) => {
+        const obj1 = {};
         querySnapshot.forEach((doc) => {
-          obj[doc.id] = doc.data();
+          obj1[doc.id] = doc.data();
         });
-        this.rooms = obj;
+        this.osakaRooms = obj1;
       });
+      this.roomsRef.where("prefecture", "==", "Kyoto").onSnapshot((querySnapshot) => {
+        const obj2 = {};
+        querySnapshot.forEach((doc) => {
+          obj2[doc.id] = doc.data();
+        });
+        this.kyotoRooms = obj2;
+      });
+      this.roomsRef.where("prefecture", "==", "Hyogo").onSnapshot((querySnapshot) => {
+        const obj3 = {};
+        querySnapshot.forEach((doc) => {
+          obj3[doc.id] = doc.data();
+        });
+        this.hyogoRooms = obj3;
+      });
+      this.roomsRef.where("prefecture", "==", "Nara").onSnapshot((querySnapshot) => {
+        const obj4 = {};
+        querySnapshot.forEach((doc) => {
+          obj4[doc.id] = doc.data();
+        });
+        this.naraRooms = obj4;
+      });
+      this.roomsRef.where("prefecture", "==", "Shiga").onSnapshot((querySnapshot) => {
+        const obj5 = {};
+        querySnapshot.forEach((doc) => {
+          obj5[doc.id] = doc.data();
+        });
+        this.shigaRooms = obj5;
+      });
+      this.roomsRef.where("prefecture", "==", "Wakayama").onSnapshot((querySnapshot) => {
+        const obj6 = {};
+        querySnapshot.forEach((doc) => {
+          obj6[doc.id] = doc.data();
+        });
+        this.wakayamaRooms = obj6;
+      });
+      this.roomsRef.where("prefecture", "==", "Mie").onSnapshot((querySnapshot) => {
+        const obj7 = {};
+        querySnapshot.forEach((doc) => {
+          obj7[doc.id] = doc.data();
+        });
+        this.mieRooms = obj7;
+      });
+
     },
   };
 </script>
 
 <style scoped>
-* {
+* :not(p) {
   box-sizing: border-box;
   text-align: center;
 }
-.room-roomnames {
-  color: black;
-  width: 400px;
-  text-decoration: none;
-  text-align: center;
-  margin-bottom: 0.8em;
-  position: relative;
-  display: inline-block;
-  padding: 0.8em;
-  background: rgb(235, 235, 235);
-  border-radius: 4px;
-  line-height: 1.2em;
+p {
+  font-size: 1.2em;
+  margin: 1% auto 1% 10%;
 }
 </style>
