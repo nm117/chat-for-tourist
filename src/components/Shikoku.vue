@@ -2,19 +2,19 @@
   <div id="room-shikoku">
     <h1>Shikoku Region</h1><br>
 
-    <p><router-link to="/kagawa" class="pref-link">Kagawa</router-link></p>
+    <p><router-link to="/kagawa" class="pref-link">▶︎ Kagawa</router-link></p>
     <div v-for="(room, id) in kagawaRooms" :key="id" class="rooms">
       <router-link :to="{ name: 'Chat', params: { id: id }}" class="room-roomnames">{{ room.roomname }}</router-link>
     </div>
-    <p><router-link to="/ehime" class="pref-link">Ehime</router-link></p>
+    <p><router-link to="/ehime" class="pref-link">▶︎ Ehime</router-link></p>
     <div v-for="(room, id) in ehimeRooms" :key="id" class="rooms">
       <router-link :to="{ name: 'Chat', params: { id: id }}" class="room-roomnames">{{ room.roomname }}</router-link>
     </div>
-    <p><router-link to="/tokushima" class="pref-link">Tokushima</router-link></p>
+    <p><router-link to="/tokushima" class="pref-link">▶︎ Tokushima</router-link></p>
     <div v-for="(room, id) in tokushimaRooms" :key="id" class="rooms">
       <router-link :to="{ name: 'Chat', params: { id: id }}" class="room-roomnames">{{ room.roomname }}</router-link>
     </div>
-    <p><router-link to="/kochi" class="pref-link">Kochi</router-link></p>
+    <p><router-link to="/kochi" class="pref-link">▶︎ Kochi</router-link></p>
     <div v-for="(room, id) in kochiRooms" :key="id" class="rooms">
       <router-link :to="{ name: 'Chat', params: { id: id }}" class="room-roomnames">{{ room.roomname }}</router-link>
     </div>
@@ -73,24 +73,12 @@
 </script>
 
 <style scoped>
-* {
+* :not(p) {
   box-sizing: border-box;
   text-align: center;
 }
 p {
   font-size: 1.2em;
-  margin: 1% 60% 1% 0;
-}
-.room-roomnames {
-  color: black;
-  width: 65%;
-  text-decoration: none;
-  text-align: center;
-  margin-bottom: 0.8em;
-  display: inline-block;
-  padding: 0.8em;
-  background: rgb(235, 235, 235);
-  border-radius: 4px;
-  /* line-height: 1.2em; */
+  margin: 1% auto 1% 10%;
 }
 </style>

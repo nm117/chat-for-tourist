@@ -72,7 +72,7 @@ export default {
   border-radius: 5px;
 }
 .signup-pannel {
-  width: 450px;
+  width: 90%;
   box-sizing: border-box;
   background-color: #fff;
   border-radius: 10px;
@@ -80,8 +80,23 @@ export default {
   margin: 50px auto;
   box-shadow: 15px 15px 0px rgba(0, 0, 0, 0.1);
 }
+@media (min-width: 600px) {
+.signup-pannel {
+  width: 450px;
+}
+}
 h2 {
   margin-bottom: 1em;
+}
+.signup {
+  font-weight: bold;
+  font-size: 1.1em;
+  width: 85%;
+  padding: 0.8em 0.5em;
+  border: none;
+  background: #c93f47;
+  cursor: pointer;
+  color: white;
 }
 .google-signup {
   width: 85%;
@@ -96,15 +111,5 @@ input {
   padding: 0.8em 0.5em;
   color: black;
   /* line-height: 1.2em; */
-}
-.signup {
-  font-weight: bold;
-  font-size: 1.1em;
-  width: 85%;
-  padding: 0.8em 0.5em;
-  border: none;
-  background: #c93f47;
-  cursor: pointer;
-  color: white;
 }
 </style>

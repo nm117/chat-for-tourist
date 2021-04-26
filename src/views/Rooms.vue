@@ -41,7 +41,7 @@
 }
 .room-roomnames {
   color: black;
-  width: 400px;
+  width: 80%;
   text-decoration: none;
   text-align: center;
   margin-bottom: 0.8em;
@@ -50,5 +50,15 @@
   background: rgb(235, 235, 235);
   border-radius: 4px;
   line-height: 1.2em;
+}
+@media (min-width: 600px) {
+.room-roomnames {
+  width: 400px;
+}
+}
+@media (min-width: 1025px) {
+.room-roomnames {
+  width: 400px;
+}
 }
 </style>
