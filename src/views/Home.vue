@@ -52,7 +52,6 @@ p {
   font-size: 1em;
 }
 .abouts {
-  box-sizing: border-box;
   padding: 0 2%;
   display: flex;
   justify-content: center;
@@ -81,7 +80,7 @@ p {
   }
 }
 .sub-photo {
-  width: 100%;
+  width: 95%;
   text-align: center;
 }
 </style>

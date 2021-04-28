@@ -9,7 +9,6 @@
       <input v-model="email" placeholder="Email" type="email" />
       <input v-model="password" placeholder="Password" type="password" />
       <button @click="signinWithEmail" class="signin">Sign in</button>
-
       <p class="error-message" v-if="getError">{{ getError }}</p>
     </div>
   </div>
