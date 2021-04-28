@@ -1,11 +1,15 @@
 <template>
   <div id="create-room">
     <h2>What about do you want to talk?</h2>
-      <div class="newroom">
-        <h3>{{ $route.params.value }} pref. page</h3>
-        <input v-model="newRoomName" placeholder="ROOMNAME here" class="input-roomname" /><br />
-        <button @click="createRoom" class="createroom-button">CREATE NEW ROOM</button>
-      </div>
+    <div class="newroom">
+      <h3>{{ $route.params.value }} pref. page</h3>
+      <input
+        v-model="newRoomName"
+        placeholder="ROOMNAME here"
+        class="input-roomname"
+      />
+      <button @click="createRoom" class="createroom-button">CREATE NEW ROOM</button>
+    </div>
   </div>
 </template>
 
@@ -63,15 +67,15 @@ export default {
   border-radius: 10px;
   padding: 50px 20px;
   margin: 50px auto;
-  box-shadow:15px 15px 0px rgba(0,0,0,.1);
+  box-shadow: 15px 15px 0px rgba(0, 0, 0, 0.1);
 }
 a {
   padding: 0 0.3em;
   transition: all 0.1s;
 }
 a:hover {
-  background:rgba(244,167,185,0.2);
-  filter: drop-shadow(0 0 10px #F4A7B9);
+  background: rgba(244, 167, 185, 0.2);
+  filter: drop-shadow(0 0 10px #f4a7b9);
 }
 h2 {
   font-size: 1.3em;
@@ -84,7 +88,7 @@ h3 {
   width: 85%;
   margin-bottom: 0.8em;
   padding: 0.8em 0.5em;
-  border: 2px solid #66BAB7;
+  border: 2px solid #66bab7;
   border-radius: 5px;
   font-size: 1em;
 }
@@ -96,27 +100,27 @@ h3 {
   margin-top: 2em;
   border-radius: 5px;
   border: none;
-  background: #FBDCCE;
+  background: #fbdcce;
   cursor: pointer;
 }
 @media (min-width: 600px) {
-.newroom {
-  width: 450px;
-}
-h2 {
-  font-size: 1.5em;
-}
+  .newroom {
+    width: 450px;
+  }
+  h2 {
+    font-size: 1.5em;
+  }
 }
 @media (min-width: 1025px) {
-.newroom {
-  width: 450px;
-}
-#create-room {
-  height: 100vh;
-  text-align: center;
-}
-h2 {
-  font-size: 1.5em;
-}
+  .newroom {
+    width: 450px;
+  }
+  #create-room {
+    height: 100vh;
+    text-align: center;
+  }
+  h2 {
+    font-size: 1.5em;
+  }
 }
 </style>

@@ -5,7 +5,7 @@ import Home from './views/Home.vue'
 import Signup from './views/Signup.vue'
 import Signin from './views/Signin.vue'
 import Chat from './views/Chat.vue'
-import Rooms from './views/Rooms.vue'
+// import Rooms from './views/Rooms.vue'
 import Top from './views/Top.vue'
 import CreateRoom from './components/CreateRoom.vue'
 import Hokkaido from './components/Hokkaido.vue'
@@ -104,12 +104,12 @@ export default new VueRouter({
       props: true,
       beforeEnter: AuthGuard,
     },
-    {
-      path: '/rooms',
-      name: 'Rooms',
-      component: Rooms,
-      beforeEnter: AuthGuard,
-    },
+    // {
+    //   path: '/rooms',
+    //   name: 'Rooms',
+    //   component: Rooms,
+    //   beforeEnter: AuthGuard,
+    // },
     {
       path: '/top',
       name: 'Top',

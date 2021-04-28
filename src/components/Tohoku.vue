@@ -2,7 +2,7 @@
   <div id="room-tohoku">
     <h1>Tohoku Region</h1><br>
 
-    <p><router-link to="/aomori" class="pref-link">▶︎ Aomori</router-link></p>
+    <p><router-link to="/aomori" class="pref-link">▶ Aomori</router-link></p>
     <div v-for="(room, id) in aomoriRooms" :key="id" class="rooms">
       <router-link :to="{ name: 'Chat', params: { id: id }}" class="room-roomnames">{{ room.roomname }}</router-link>
     </div>

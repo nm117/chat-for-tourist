@@ -1,6 +1,4 @@
 import firebase from '../firebase'
-// import { firestoreAction } from 'vuexfire'
-// import { faCommentMedical } from '@fortawesome/free-solid-svg-icons';
 
 const db = firebase.firestore()
 const usersRef = db.collection('users')
@@ -24,13 +22,6 @@ const AuthModule = {
 
   },
   actions: {
-    //Vuexfire
-    // bindUsersRef: firestoreAction(({ bindFirestoreRef }) => {
-    //   bindFirestoreRef('users', usersRef);
-    // }),
-    // unbindUsersRef: firestoreAction(({ unbindFirestoreRef }) => {
-    //   unbindFirestoreRef('users');
-    // }),
     updateUser ({ commit }, user) {
       commit('setUser', {
         _id: user.uid,
@@ -123,15 +114,6 @@ const AuthModule = {
         console.log(error.message);
       })
     }
-    //VUEXFIRE
-    // EDIT_USER: firestoreAction((context, { i, payload }) => {
-    //   usersRef.doc(i).update({
-    //     username: payload.username,
-    //   });
-    // }),
-    // DELETE_USER: firestoreAction((context, i) => {
-    //   usersRef.doc(i).delete();
-    // })
   }
 };
 

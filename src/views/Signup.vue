@@ -81,9 +81,9 @@ export default {
   box-shadow: 15px 15px 0px rgba(0, 0, 0, 0.1);
 }
 @media (min-width: 600px) {
-.signup-pannel {
-  width: 450px;
-}
+  .signup-pannel {
+    width: 450px;
+  }
 }
 h2 {
   margin-bottom: 1em;
@@ -110,6 +110,5 @@ input {
   margin-bottom: 0.8em;
   padding: 0.8em 0.5em;
   color: black;
-  /* line-height: 1.2em; */
 }
 </style>

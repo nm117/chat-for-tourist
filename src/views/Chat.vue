@@ -6,7 +6,8 @@
       @keypress.prevent.enter.exact="createChat"
       v-model="newChat"
     ></textarea>
-    <transition-group name="chats" class="chats" tag="div">
+
+    <div class="chats" tag="div">
       <section
         v-for="(chat, id) in chats"
         :key="id + 0"
@@ -36,7 +37,8 @@
         <button @click="deleteChat(id)" class="chat-delete">x</button>
         {{ chat.username }}
       </section>
-    </transition-group>
+    </div>
+
   </div>
 </template>
 
@@ -140,9 +142,6 @@ export default {
 </script>
 
 <style scoped>
-* {
-  box-sizing: border-box;
-}
 .chats {
   margin: 0 5%;
 }
