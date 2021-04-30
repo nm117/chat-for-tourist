@@ -5,7 +5,7 @@
           Title Title Title</h1>
     </div>
 
-    <h2>Get through this chatting 'locals' service</h2>
+    <h2>Unforgettable memories to every tourist</h2>
 
     <div class="abouts">
       <div class="about"><img src="@/assets/about-1.jpg" class="sub-photo" alt="Kaimondake">

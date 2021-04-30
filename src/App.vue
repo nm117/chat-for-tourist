@@ -72,8 +72,6 @@ export default {
 @import '~modern-css-reset';
 
 * {
-  margin: 0px;
-  padding: 0px;
   text-decoration: none;
   color: #2c3e50;
   font-family: Avenir, Helvetica, Arial, sans-serif;
@@ -81,7 +79,6 @@ export default {
   -moz-osx-font-smoothing: grayscale;
 }
 nav {
-  box-sizing: border-box;
   background: #66BAB7;
   height: 3.5em;
   width: 100%;
@@ -89,7 +86,7 @@ nav {
   position: fixed;
   display: flex;
   justify-content: space-between;
-  z-index: 10;
+  /* z-index: 10; */
 }
 li {
   list-style-type: none;

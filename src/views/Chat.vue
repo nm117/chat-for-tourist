@@ -7,24 +7,24 @@
       v-model="newChat"
     ></textarea>
 
-    <div class="chats" tag="div">
-      <section
+    <div class="chats">
+      <div
         v-for="(chat, id) in chats"
-        :key="id + 0"
-        :class="{
-          'chat-items': chat.userId !== userId,
-          'chat-items-own': chat.userId === userId,
+        :key="chat.id"  
+          :class="{
+          'chat-item-own': chat.userId === userId,
+          'chat-item': chat.userId !== userId,
         }"
       >
-        <span
+        <span 
           v-if="!chat.editing"
           @click="editChat(chat)"
           :class="{
-            'chat-message': chat.userId !== userId,
-            'chat-message-own': chat.userId === userId,
-          }"
-          >{{ chat.item }}</span
-        >
+          'chat-message-own': chat.userId === userId,
+          'chat-message': chat.userId !== userId,
+        }"
+          >{{ chat.item }}
+        </span>
         <input
           v-else
           class="chat-edit"
@@ -36,7 +36,7 @@
         />
         <button @click="deleteChat(id)" class="chat-delete">x</button>
         {{ chat.username }}
-      </section>
+      </div>
     </div>
 
   </div>
@@ -116,22 +116,24 @@ export default {
           obj[doc.id] = doc.data();
         });
         this.chats = obj;
+        console.log(this.chat);
       });
     },
     // compliteChat(chat, i) {
     //   chat.isComplited = !chat.isComplited;
     //   this.chatsRef.doc(i).update(chat);
     // },
-    deleteChat(i) {
-      this.chatsRef.doc(i).delete();
+    deleteChat(id) {
+      this.chatsRef.doc(id).delete();
     },
     editChat(chat) {
       chat.editing = true;
       this.editingChat = chat.item;
     },
-    updateChat(chat, i) {
+    updateChat(chat, id) {
       if (this.editingChat === "") return;
-      this.chatsRef.doc(i).update({
+
+      this.chatsRef.doc(id).update({
         item: this.editingChat,
       });
       this.editingChat = "";
@@ -154,15 +156,22 @@ export default {
   background: #f5f5f5;
   font-size: 1em;
 }
-.chat-items {
+.chat-item {
   text-align: left;
   margin-bottom: 0.8em;
 }
-.chat-items-own {
+.chat-item-own {
   text-align: right;
   margin-bottom: 0.8em;
 }
-.chat-message,
+.chat-message {
+  position: relative;
+  display: inline-block;
+  padding: 0.8em;
+  background: #deefe8;
+  border-radius: 30px;
+  line-height: 1.2em;
+}
 .chat-message-own {
   position: relative;
   display: inline-block;
@@ -171,6 +180,15 @@ export default {
   border-radius: 30px;
   line-height: 1.2em;
 }
+/* .chat-message,
+.chat-message-own {
+  position: relative;
+  display: inline-block;
+  padding: 0.8em;
+  background: #deefe8;
+  border-radius: 30px;
+  line-height: 1.2em;
+} */
 .chat-message::before {
   position: absolute;
   content: " ";
