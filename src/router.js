@@ -1,11 +1,9 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
-// import store from './store'
 import Home from './views/Home.vue'
 import Signup from './views/Signup.vue'
 import Signin from './views/Signin.vue'
 import Chat from './views/Chat.vue'
-// import Rooms from './views/Rooms.vue'
 import Top from './views/Top.vue'
 import CreateRoom from './components/CreateRoom.vue'
 import Hokkaido from './components/Hokkaido.vue'
@@ -63,7 +61,6 @@ import Chugoku from './components/Chugoku.vue'
 import Shikoku from './components/Shikoku.vue'
 import Kyushu from './components/Kyushu.vue'
 import AuthGuard from './auth-guard.js'
-// import firebase from './firebase'
 
 Vue.use(VueRouter)
 
@@ -74,13 +71,6 @@ export default new VueRouter({
       path: '/',
       name: 'Home',
       component: Home,
-      // beforeEnter: (to, from, next) => {
-      // if (store.getters.getUser.length === 0) {
-      //   next()
-      // } else {
-      //   next({ name: 'Top' })
-      // }
-      // }
     },
     {
       path: '/signup',
@@ -92,11 +82,6 @@ export default new VueRouter({
       name: 'Signin',
       component: Signin,
     },
-    // {
-    //   path: '/chat',
-    //   name: 'Chat',
-    //   component: Chat,
-    // },
     {
       path: '/chat/:id',
       name: 'Chat',
@@ -104,28 +89,11 @@ export default new VueRouter({
       props: true,
       beforeEnter: AuthGuard,
     },
-    // {
-    //   path: '/rooms',
-    //   name: 'Rooms',
-    //   component: Rooms,
-    //   beforeEnter: AuthGuard,
-    // },
     {
       path: '/top',
       name: 'Top',
       component: Top,
       beforeEnter: AuthGuard,
-      // (to, from, next) => {
-      //   if (store.getters.getUser) {
-      //     next()
-        // } else if (from.path === '/signup' && store.getters.isSignIn) {
-        //   next()
-        // } else if (from.path === '/signin' && store.getters.isSignIn) {
-        //   next()
-        // } else {
-        //   next({ name: 'Home' })
-        // }
-      // },
     },
     {
       path: '/createroom/:value',
@@ -133,10 +101,6 @@ export default new VueRouter({
       component: CreateRoom,
       beforeEnter: AuthGuard,
     },
-    // {
-    //   name: 'AuthGuard',
-    //   component: AuthGuard,
-    // },
     {
       path: '/hokkaido',
       name: 'Hokkaido',

@@ -110,5 +110,6 @@ input {
   margin-bottom: 0.8em;
   padding: 0.8em 0.5em;
   color: black;
+
 }
 </style>

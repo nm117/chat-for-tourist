@@ -62,9 +62,11 @@
       <!-- Flexbox2/4 -->
       <div class="select-pref-left">
         <!-- Hokkaido -->
-        <div class="select-region" :class="{ 'hover-map': hoverHokkaidoOn === true }" @mouseover="hoverHokkaido"
-          @mouseleave="hoverOutHokkaido">
-          <router-link to="/hokkaido" class="hokkaido-title">Hokkaido</router-link>
+        <div class="hokkaido">
+          <span class="select-region" :class="{ 'hover-map': hoverHokkaidoOn === true }" @mouseover="hoverHokkaido"
+            @mouseleave="hoverOutHokkaido">
+            <router-link to="/hokkaido" class="hokkaido-title">Hokkaido</router-link>
+          </span>
         </div>
         <!-- Tohoku -->
         <div class="tohoku">
@@ -75,24 +77,12 @@
           </span>
           <input type="checkbox" class="check1" id="box1">
           <ul class="toggle1">
-            <li>
-              <router-link to="/aomori">Aomori</router-link>
-            </li>
-            <li>
-              <router-link to="/akita">Akita</router-link>
-            </li>
-            <li>
-              <router-link to="/iwate">Iwate</router-link>
-            </li>
-            <li>
-              <router-link to="/yamagata">Yamagata</router-link>
-            </li>
-            <li>
-              <router-link to="/miyagi">Miyagi</router-link>
-            </li>
-            <li>
-              <router-link to="/fukushima">Fukushima</router-link>
-            </li>
+            <li><router-link to="/aomori">Aomori</router-link></li>
+            <li><router-link to="/akita">Akita</router-link></li>
+            <li><router-link to="/iwate">Iwate</router-link></li>
+            <li><router-link to="/yamagata">Yamagata</router-link></li>
+            <li><router-link to="/miyagi">Miyagi</router-link></li>
+            <li><router-link to="/fukushima">Fukushima</router-link></li>
           </ul>
         </div>
         <!-- kanto -->
@@ -104,27 +94,13 @@
           </span>
           <input type="checkbox" class="check2" id="box2">
           <ul class="toggle2">
-            <li>
-              <router-link to="/tokyo">Tokyo</router-link>
-            </li>
-            <li>
-              <router-link to="/ibaraki">Ibaraki</router-link>
-            </li>
-            <li>
-              <router-link to="/gunma">Gunma</router-link>
-            </li>
-            <li>
-              <router-link to="/chiba">Chiba</router-link>
-            </li>
-            <li>
-              <router-link to="/saitama">Saitama</router-link>
-            </li>
-            <li>
-              <router-link to="/kanagawa">Kanagawa</router-link>
-            </li>
-            <li>
-              <router-link to="/tochigi">Tochigi</router-link>
-            </li>
+            <li><router-link to="/tokyo">Tokyo</router-link></li>
+            <li><router-link to="/kanagawa">Kanagawa</router-link></li>
+            <li><router-link to="/saitama">Saitama</router-link></li>
+            <li><router-link to="/chiba">Chiba</router-link></li>
+            <li><router-link to="/ibaraki">Ibaraki</router-link></li>
+            <li><router-link to="/gunma">Gunma</router-link></li>
+            <li><router-link to="/tochigi">Tochigi</router-link></li>
           </ul>
         </div>
       </div>
@@ -140,33 +116,15 @@
           </span>
           <input type="checkbox" class="check3" id="box3">
           <ul class="toggle3">
-            <li>
-              <router-link to="/niigata">Niigata</router-link>
-            </li>
-            <li>
-              <router-link to="/toyama">Toyama</router-link>
-            </li>
-            <li>
-              <router-link to="/ishikawa">Ishikawa</router-link>
-            </li>
-            <li>
-              <router-link to="/fukui">Fukui</router-link>
-            </li>
-            <li>
-              <router-link to="/nagano">Nagano</router-link>
-            </li>
-            <li>
-              <router-link to="/gifu">Gifu</router-link>
-            </li>
-            <li>
-              <router-link to="/yamanashi">Yamanashi</router-link>
-            </li>
-            <li>
-              <router-link to="/shizuoka">Shizuoka</router-link>
-            </li>
-            <li>
-              <router-link to="/aichi">Aichi</router-link>
-            </li>
+            <li><router-link to="/niigata">Niigata</router-link></li>
+            <li><router-link to="/yamanashi">Yamanashi</router-link></li>
+            <li><router-link to="/nagano">Nagano</router-link></li>
+            <li><router-link to="/gifu">Gifu</router-link></li>
+            <li><router-link to="/toyama">Toyama</router-link></li>
+            <li><router-link to="/ishikawa">Ishikawa</router-link></li>
+            <li><router-link to="/fukui">Fukui</router-link></li>
+            <li><router-link to="/shizuoka">Shizuoka</router-link></li>
+            <li><router-link to="/aichi">Aichi</router-link></li>
           </ul>
         </div>
         <!-- kinki -->
@@ -178,27 +136,13 @@
           </span>
           <input type="checkbox" class="check4" id="box4">
           <ul class="toggle4">
-            <li>
-              <router-link to="/osaka">Osaka</router-link>
-            </li>
-            <li>
-              <router-link to="/kyoto">Kyoto</router-link>
-            </li>
-            <li>
-              <router-link to="/nara">Nara</router-link>
-            </li>
-            <li>
-              <router-link to="/hyogo">Hyogo</router-link>
-            </li>
-            <li>
-              <router-link to="/wakayama">Wakayama</router-link>
-            </li>
-            <li>
-              <router-link to="/shiga">Shiga</router-link>
-            </li>
-            <li>
-              <router-link to="/mie">Mie</router-link>
-            </li>
+            <li><router-link to="/osaka">Osaka</router-link></li>
+            <li><router-link to="/kyoto">Kyoto</router-link></li>
+            <li><router-link to="/nara">Nara</router-link></li>
+            <li><router-link to="/hyogo">Hyogo</router-link></li>
+            <li><router-link to="/wakayama">Wakayama</router-link></li>
+            <li><router-link to="/shiga">Shiga</router-link></li>
+            <li><router-link to="/mie">Mie</router-link></li>
           </ul>
         </div>
       </div>
@@ -214,21 +158,11 @@
           </span>
           <input type="checkbox" class="check5" id="box5">
           <ul class="toggle5">
-            <li>
-              <router-link to="/okayama">Okayama</router-link>
-            </li>
-            <li>
-              <router-link to="/hiroshima">Hiroshima</router-link>
-            </li>
-            <li>
-              <router-link to="/tottori">Tottori</router-link>
-            </li>
-            <li>
-              <router-link to="/shimane">Shimane</router-link>
-            </li>
-            <li>
-              <router-link to="/yamaguchi">Yamaguchi</router-link>
-            </li>
+            <li><router-link to="/okayama">Okayama</router-link></li>
+            <li><router-link to="/hiroshima">Hiroshima</router-link></li>
+            <li><router-link to="/tottori">Tottori</router-link></li>
+            <li><router-link to="/shimane">Shimane</router-link></li>
+            <li><router-link to="/yamaguchi">Yamaguchi</router-link></li>
           </ul>
         </div>
         <!-- shikoku -->
@@ -240,18 +174,10 @@
           </span>
           <input type="checkbox" class="check6" id="box6">
           <ul class="toggle6">
-            <li>
-              <router-link to="/kagawa">Kagawa</router-link>
-            </li>
-            <li>
-              <router-link to="/ehime">Ehime</router-link>
-            </li>
-            <li>
-              <router-link to="/tokushima">Tokushima</router-link>
-            </li>
-            <li>
-              <router-link to="/kochi">Kochi</router-link>
-            </li>
+            <li><router-link to="/kagawa">Kagawa</router-link></li>
+            <li><router-link to="/ehime">Ehime</router-link></li>
+            <li><router-link to="/tokushima">Tokushima</router-link></li>
+            <li><router-link to="/kochi">Kochi</router-link></li>
           </ul>
         </div>
         <!-- kyushu -->
@@ -263,27 +189,13 @@
           </span>
           <input type="checkbox" class="check7" id="box7">
           <ul class="toggle7">
-            <li>
-              <router-link to="/fukuoka">Fukuoka</router-link>
-            </li>
-            <li>
-              <router-link to="/kumamoto">Kumamoto</router-link>
-            </li>
-            <li>
-              <router-link to="/oita">Oita</router-link>
-            </li>
-            <li>
-              <router-link to="/nagasaki">Nagasaki</router-link>
-            </li>
-            <li>
-              <router-link to="/saga">Saga</router-link>
-            </li>
-            <li>
-              <router-link to="/miyazaki">Miyazaki</router-link>
-            </li>
-            <li>
-              <router-link to="/kagoshima">Kagoshima</router-link>
-            </li>
+            <li><router-link to="/fukuoka">Fukuoka</router-link></li>
+            <li><router-link to="/kumamoto">Kumamoto</router-link></li>
+            <li><router-link to="/oita">Oita</router-link></li>
+            <li><router-link to="/nagasaki">Nagasaki</router-link></li>
+            <li><router-link to="/saga">Saga</router-link></li>
+            <li><router-link to="/miyazaki">Miyazaki</router-link></li>
+            <li><router-link to="/kagoshima">Kagoshima</router-link></li>
           </ul>
         </div>
         <!-- okinawa -->
@@ -411,85 +323,66 @@
     background-size: 100% auto;
     background-repeat: no-repeat;
     height: auto;
-    /* height: calc(100vh - 3.5em); */
   }
-
+  * {
+    margin: 0;
+  }
   .top {
     margin: 0 10% 0 5%;
     display: flex;
     justify-content: space-around;
     flex-wrap: wrap;
   }
-
   a {
     padding: 0 0.3em;
     transition: all 0.01s;
   }
-
   a:hover:not(.hokkaido-title, .tohoku-title, .chubu-title, .kanto-title, .kinki-title, .chugoku-title, .shikoku-title, .kyushu-title, .okinawa-title) {
     filter: drop-shadow(5px 5px 10px #c93f47);
   }
-
   h2 {
     margin-left: 8%;
   }
-
-  /* 日本地図DOM */
-  /* .map-japan {
-  text-align: center;
-  margin: auto;
-} */
   .img-japanmap {
     margin: 0 auto;
   }
-
   li {
     line-height: 1.8em;
     padding-left: 1%;
     font-size: 1.2em;
   }
-
   span {
     display: inline-block;
   }
-
   .select-region {
     font-size: 1.5em;
     font-style: italic;
     font-weight: bold;
-    padding-top: 10px;
-    margin-bottom: 3px;
-    /* display: inline-block; */
+    margin-top: 0.5em;
     text-decoration: underline;
     filter: none;
   }
-
   .hover-map {
     font-size: 1.5em;
     font-style: italic;
     font-weight: bold;
-    padding-top: 10px;
-    margin-bottom: 3px;
+    margin-top: 0.5em;
     text-decoration: underline;
     filter: drop-shadow(5px 5px 10px #c93f47);
   }
-
   .map-japan,
   .select-pref-left,
   .select-pref-center {
     width: 90%;
   }
-
   .select-pref-right {
     width: 90%;
     margin-bottom: 5em;
   }
-
   .hokkaido-title, .tohoku-title, .chubu-title, .kanto-title, .kinki-title, .chugoku-title, .shikoku-title, .kyushu-title, .okinawa-title {
     display: block;
     width: 100%;
   }
-
   .ac1,
   .ac2,
   .ac3,
@@ -499,7 +392,6 @@
   .ac7 {
     pointer-events: all;
   }
-
   .toggle1,
   .toggle2,
   .toggle3,
@@ -512,7 +404,6 @@
     transition: .2s;
     overflow: hidden;
   }
-
   .check1,
   .check2,
   .check3,
@@ -522,7 +413,6 @@
   .check7 {
     display: none;
   }
-
   .check1:checked+.toggle1,
   .check2:checked+.toggle2,
   .check3:checked+.toggle3,
@@ -533,12 +423,10 @@
     height: auto;
     padding: 8px;
   }
-
   @media (min-width: 600px) {
     #top-page {
       height: auto;
     }
-
     .map-japan,
     .select-pref-left,
     .select-pref-center,
@@ -546,16 +434,13 @@
       width: 90%;
     }
   }
-
-  @media (min-width: 1025px) {
+  @media (min-width: 1020px) {
     #top-page {
       height: 100vh;
     }
-
     .map-japan {
       width: auto;
     }
-
     .select-pref-left,
     .select-pref-center,
     .select-pref-right {
@@ -563,7 +448,6 @@
       width: auto;
       margin-bottom: auto;
     }
-
     .ac1,
     .ac2,
     .ac3,
@@ -573,11 +457,9 @@
     .ac7 {
       display: none;
     }
-
     input {
       display: none;
     }
-
     .toggle1,
     .toggle2,
     .toggle3,
@@ -586,14 +468,13 @@
     .toggle6,
     .toggle7 {
       height: auto;
-      transition: .2s;
+      margin: 0;
       overflow: visible;
     }
-
     li {
     line-height: 1.7em;
     padding-left: 1%;
     font-size: 1.05em;
-  }
+    }
   }
 </style>
