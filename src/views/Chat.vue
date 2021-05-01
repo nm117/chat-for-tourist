@@ -11,34 +11,24 @@
       <div
         v-for="(chat, id) in chats"
         :key="chat.id"  
-          :class="{
+        :class="{
           'chat-item-own': chat.userId === userId,
           'chat-item': chat.userId !== userId,
         }"
       >
-        <span 
-          v-if="!chat.editing"
-          @click="editChat(chat)"
-          :class="{
-          'chat-message-own': chat.userId === userId,
-          'chat-message': chat.userId !== userId,
-        }"
-          >{{ chat.item }}
-        </span>
-        <input
-          v-else
-          class="chat-edit"
-          type="text"
-          v-model="editingChat"
-          @keyup.enter="updateChat(chat, id)"
-          @blur="updateChat(chat, id)"
-          v-focus
-        />
-        <button @click="deleteChat(id)" class="chat-delete">x</button>
-        {{ chat.username }}
+      <span
+      :class="{
+        'chat-message-own': chat.userId === userId,
+        'chat-message': chat.userId !== userId,
+      }"
+      >
+      {{ chat.item }}
+      </span>
+      <button @click="deleteChat(id)" class="chat-delete">x</button>
+      {{ chat.username }}
       </div>
     </div>
-
+    
   </div>
 </template>
 
@@ -119,25 +109,8 @@ export default {
         console.log(this.chat);
       });
     },
-    // compliteChat(chat, i) {
-    //   chat.isComplited = !chat.isComplited;
-    //   this.chatsRef.doc(i).update(chat);
-    // },
     deleteChat(id) {
       this.chatsRef.doc(id).delete();
-    },
-    editChat(chat) {
-      chat.editing = true;
-      this.editingChat = chat.item;
-    },
-    updateChat(chat, id) {
-      if (this.editingChat === "") return;
-
-      this.chatsRef.doc(id).update({
-        item: this.editingChat,
-      });
-      this.editingChat = "";
-      chat.editing = false;
     },
   },
 };
@@ -164,14 +137,7 @@ export default {
   text-align: right;
   margin-bottom: 0.8em;
 }
-.chat-message {
-  position: relative;
-  display: inline-block;
-  padding: 0.8em;
-  background: #deefe8;
-  border-radius: 30px;
-  line-height: 1.2em;
-}
+.chat-message,
 .chat-message-own {
   position: relative;
   display: inline-block;
@@ -180,15 +146,6 @@ export default {
   border-radius: 30px;
   line-height: 1.2em;
 }
-/* .chat-message,
-.chat-message-own {
-  position: relative;
-  display: inline-block;
-  padding: 0.8em;
-  background: #deefe8;
-  border-radius: 30px;
-  line-height: 1.2em;
-} */
 .chat-message::before {
   position: absolute;
   content: " ";
