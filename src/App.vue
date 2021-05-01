@@ -86,7 +86,6 @@ nav {
   position: fixed;
   display: flex;
   justify-content: space-between;
-  /* z-index: 10; */
 }
 li {
   list-style-type: none;
