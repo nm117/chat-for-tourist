@@ -19,7 +19,6 @@ const AuthModule = {
     setUser(state, payload) {
       state.user = payload
     }
-
   },
   actions: {
     updateUser ({ commit }, user) {
@@ -35,6 +34,7 @@ const AuthModule = {
         .then(user => {
           usersRef.doc(user.user.uid).set({
             username: payload.username,
+            created: new Date(),
           })
           commit('setUser', user);
           commit('setSignIn', true);
@@ -54,6 +54,7 @@ const AuthModule = {
         .then(result => {
           usersRef.doc(result.user.uid).set({
             username: result.user.displayName,
+            created: new Date(),
           })          
           commit('setUser', result);
           commit('setSignIn', true);

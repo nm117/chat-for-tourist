@@ -65,16 +65,16 @@ export default {
   height: 100vh;
 }
 * :not(h2):not(.error-message):not(li):not(ul) {
-  text-align: center;
   border: 1px solid #eee;
   font-size: 1em;
   border-radius: 5px;
 }
 .signin-pannel {
+  text-align: center;
   width: 90%;
   background-color: #fff;
   border-radius: 10px;
-  padding: 2em 1.5em;
+  padding: 50px 20px;
   margin: 50px auto;
   box-shadow: 15px 15px 0px rgba(0, 0, 0, 0.1);
 }
@@ -95,6 +95,7 @@ h2 {
   border: none;
   background: #c93f47;
   cursor: pointer;
+  color: #fff;
 }
 .google-signin {
   width: 85%;

@@ -3,9 +3,9 @@
     <div class="pref-hokkaido">
       <h1>Hokkaido</h1>
       <router-link :to="{name: 'CreateRoom', params: { value: 'Hokkaido' }}" class="pref-create">
-        Create your chatroom in Hokkaido page</router-link>
+      Create your chatroom in Hokkaido page</router-link>
         <div v-for="(room, id) in rooms" :key="id" class="rooms">
-      <router-link :to="{ name: 'Chat', paragims: { id: id }}" class="pref-roomnames">{{ room.roomname }}</router-link>
+          <router-link :to="{ name: 'Chat', params: { id: id }}" class="pref-roomnames">{{ room.roomname }}</router-link>
       </div>
     </div>
   </div>
