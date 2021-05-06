@@ -1,7 +1,6 @@
 <template>
   <div id="top-page">
     <h2>Select area which you're interested in!</h2>
-
     <div class="top">
       <!-- Flexbox1/4 -->
       <div class="map-japan">

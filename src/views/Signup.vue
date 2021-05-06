@@ -7,7 +7,7 @@
         <li><input v-model="email" placeholder="Email" type="email" /></li>
         <li><input v-model="displayName" placeholder="Your Name" type="text" /></li>
         <li><input v-model="password" placeholder="Password" type="password" /></li>
-        <li><button @click="signupWithEmail" class="signup">Signup</button></li>
+        <li><button @click="signupWithEmail" class="signup">Sign up</button></li>
       </ul>
         <p class="error-message" v-if="getError">{{ getError }}</p>
     </div>
@@ -66,12 +66,12 @@ export default {
   height: 100vh;
 }
 * :not(h2):not(.error-message):not(li):not(ul) {
-  text-align: center;
   border: 1px solid #eee;
   font-size: 1em;
   border-radius: 5px;
 }
 .signup-pannel {
+  text-align: center;
   width: 90%;
   box-sizing: border-box;
   background-color: #fff;
@@ -79,6 +79,10 @@ export default {
   padding: 50px 20px;
   margin: 50px auto;
   box-shadow: 15px 15px 0px rgba(0, 0, 0, 0.1);
+}
+ul {
+  text-align: center;
+  padding: 0;
 }
 @media (min-width: 600px) {
   .signup-pannel {
@@ -96,7 +100,7 @@ h2 {
   border: none;
   background: #c93f47;
   cursor: pointer;
-  color: white;
+  color: #fff;
 }
 .google-signup {
   width: 85%;

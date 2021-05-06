@@ -24,7 +24,23 @@
       >
       {{ chat.item }}
       </span>
-      <button @click="deleteChat(id)" class="chat-delete">x</button>
+      <template v-if="chat.userId === userId">
+        <button @click="deleteChat(id)" class="chat-delete">x</button>
+      </template>
+      <template v-else>
+
+        <span v-if="newLike" class="chat-like">
+          <button @click="deleteLike(id)">
+            <font-awesome-icon :icon="['fas', 'heart']"/>
+          </button>
+        </span>
+        <span v-else class="chat-nolike">
+          <button @click="pushLike(id)">
+            <font-awesome-icon :icon="['far', 'heart']"/>
+          </button>
+        </span>
+        
+      </template>
       {{ chat.username }}
       </div>
     </div>
@@ -42,10 +58,12 @@ export default {
   data: function () {
     return {
       chats: {},
+      chatsRef: null,
       newChat: "",
-      editingChat: "",
       username: "",
       userId: "",
+      newLike: false,
+      likesRef: null,
     };
   },
   directives: {
@@ -59,7 +77,7 @@ export default {
     firebase.auth().onAuthStateChanged((user) => {
       if (user) {
         this.userId = user.uid;
-        var usersRef = db.collection("users").doc(this.userId);
+        const usersRef = db.collection("users").doc(this.userId);
         usersRef.get().then((doc) => {
           this.username = doc.data().username;
         });
@@ -96,21 +114,30 @@ export default {
       });
     },
     loadChat() {
-      this.chatsRef = db
-        .collection("rooms")
-        .doc(this.$route.params.id)
-        .collection("chats");
+      this.chatsRef = db.collection("rooms").doc(this.$route.params.id).collection("chats");
       this.chatsRef.orderBy("created", "asc").onSnapshot((querySnapshot) => {
         const obj = {};
         querySnapshot.forEach((doc) => {
           obj[doc.id] = doc.data();
         });
         this.chats = obj;
-        console.log(this.chat);
+        console.log(this.chats);
       });
     },
     deleteChat(id) {
       this.chatsRef.doc(id).delete();
+    },
+    pushLike(id) {
+      this.chatsRef.doc(id).collection("likedUsers").doc(this.userId).set({
+        userId: this.userId,
+        username: this.username,
+        created: new Date(),
+      });
+      this.newLike = true;
+    },
+    deleteLike(id) {
+      this.chatsRef.doc(id).collection("likedUsers").doc(this.userId).delete();
+      this.newLike = false;
     },
   },
 };
@@ -119,6 +146,10 @@ export default {
 <style scoped>
 .chats {
   margin: 0 5%;
+}
+button {
+  background-color: rgba(0,0,255,0);
+  border: none;
 }
 .chat-form {
   position: fixed;
