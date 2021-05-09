@@ -16,54 +16,44 @@
           'chat-item': chat.userId !== userId,
         }"
       >
-      <span
-      :class="{
-        'chat-message-own': chat.userId === userId,
-        'chat-message': chat.userId !== userId,
-      }"
-      >
-      {{ chat.item }}
-      </span>
-      <template v-if="chat.userId === userId">
-        <button @click="deleteChat(id)" class="chat-delete">x</button>
-      </template>
-      <template v-else>
-
-        <span v-if="newLike" class="chat-like">
-          <button @click="deleteLike(id)">
-            <font-awesome-icon :icon="['fas', 'heart']"/>
-          </button>
+        <span 
+        :class="{
+          'chat-message-own': chat.userId === userId,
+          'chat-message': chat.userId !== userId,
+        }"
+        >
+        {{ chat.item }}
         </span>
-        <span v-else class="chat-nolike">
+        <template v-if="chat.userId === userId">
+          <button @click="deleteChat(id)" class="chat-delete">x</button>
+        </template>
+        <template v-else>
           <button @click="pushLike(id)">
-            <font-awesome-icon :icon="['far', 'heart']"/>
+            <font-awesome-icon class="chat-nolike" :icon="['far', 'heart']"/>
           </button>
-        </span>
-        
-      </template>
-      {{ chat.username }}
+          <span class="like-counter">{{ chat.count }}</span>
+        </template>
+        <span class="username"> {{ chat.username }}</span>
       </div>
     </div>
-    
   </div>
 </template>
 
 <script>
 import firebase from "../firebase";
 const db = firebase.firestore();
+import { mapGetters } from "vuex";
 
 export default {
   name: "Chat",
   props: ["id"],
   data: function () {
     return {
-      chats: {},
+      chats: [],
       chatsRef: null,
-      newChat: "",
-      username: "",
-      userId: "",
-      newLike: false,
       likesRef: null,
+      newChat: "",
+      userId: "",
     };
   },
   directives: {
@@ -73,15 +63,12 @@ export default {
       },
     },
   },
+  computed: {
+    ...mapGetters([ "getUser" ]),
+  },
   created() {
     firebase.auth().onAuthStateChanged((user) => {
-      if (user) {
-        this.userId = user.uid;
-        const usersRef = db.collection("users").doc(this.userId);
-        usersRef.get().then((doc) => {
-          this.username = doc.data().username;
-        });
-      } else {
+      if (!user) {
         this.$router.push("/signup");
       }
     });
@@ -100,9 +87,10 @@ export default {
       if (this.newChat) {
         this.chatsRef.add({
           userId: this.userId,
-          username: this.username,
+          username: this.getUser.username,
           item: this.newChat,
           created: new Date(),
+          chatEditing: false,
         });
       }
       this.newChat = "";
@@ -116,13 +104,14 @@ export default {
     loadChat() {
       this.chatsRef = db.collection("rooms").doc(this.$route.params.id).collection("chats");
       this.chatsRef.orderBy("created", "asc").onSnapshot((querySnapshot) => {
-        const obj = {};
+        let obj = {}
         querySnapshot.forEach((doc) => {
           obj[doc.id] = doc.data();
+          obj[doc.id].newLike
         });
-        this.chats = obj;
-        console.log(this.chats);
-      });
+      this.chats = obj
+      console.log(this.chats);
+      })
     },
     deleteChat(id) {
       this.chatsRef.doc(id).delete();
@@ -130,15 +119,21 @@ export default {
     pushLike(id) {
       this.chatsRef.doc(id).collection("likedUsers").doc(this.userId).set({
         userId: this.userId,
-        username: this.username,
+        username: this.getUser.username,
         created: new Date(),
       });
-      this.newLike = true;
+      this.chatsRef.doc(id).update({
+        count: firebase.firestore.FieldValue.increment(1)
+      });
     },
-    deleteLike(id) {
-      this.chatsRef.doc(id).collection("likedUsers").doc(this.userId).delete();
-      this.newLike = false;
-    },
+    // deleteLike(id) {
+    //   this.chatsRef.doc(id).collection("likedUsers").doc(this.userId).delete();
+
+    //   this.chatsRef.doc(id).add({
+    //     count: db.FieldValue.increment(-1)
+    //   });
+    //   this.loadChat();
+    // },
   },
 };
 </script>
@@ -200,5 +195,8 @@ button {
   padding: 0 0.2em;
   border: none;
   cursor: pointer;
+}
+.like-counter, .username {
+  font-size: 0.8em;
 }
 </style>
