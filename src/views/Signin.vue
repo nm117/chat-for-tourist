@@ -15,6 +15,8 @@
 </template>
 
 <script>
+import { mapGetters } from "vuex";
+
 export default {
   name: "Signin",
   data: function () {
@@ -24,20 +26,11 @@ export default {
     };
   },
   computed: {
-    isSignIn() {
-      return this.$store.getters.isSignIn;
-    },
-    getError() {
-      return this.$store.getters.getError;
-    },
-    getUsers() {
-      return this.$store.getters.getUsers;
-    },
+    ...mapGetters([ "isSignIn", "getError", "getUser" ]),
   },
   watch: {
     async isSignIn(value) {
-      if (value === true) {
-        this.$store.commit('setSignIn', true)
+      if (value) {
         await this.$router.push({ name: "Top" });
         console.log(value);
       }
@@ -76,20 +69,27 @@ export default {
   border-radius: 10px;
   padding: 50px 20px;
   margin: 50px auto;
-  box-shadow: 15px 15px 0px rgba(0, 0, 0, 0.1);
+  box-shadow: 10px 10px 0px rgba(0, 0, 0, 0.1);
 }
 @media (min-width: 600px) {
 .signin-pannel {
   width: 450px;
+  box-shadow: 15px 15px 0px rgba(0, 0, 0, 0.1);
+}
+}
+@media (min-width: 1025px) {
+.signin-pannel {
+  box-shadow: 15px 15px 0px rgba(0, 0, 0, 0.1);
 }
 }
 h2 {
   margin-bottom: 1em;
+  font-size: 1.3em;
 }
 .signin {
   font-weight: bold;
   font-size: 1.1em;
-  width: 85%;
+  width: 100%;
   padding: 0.8em 0.5em;
   border-radius: 5px;
   border: none;
@@ -98,14 +98,14 @@ h2 {
   color: #fff;
 }
 .google-signin {
-  width: 85%;
+  width: 100%;
   padding: 0.8em 0.5em;
   margin-bottom: 4em;
   cursor: pointer;
 }
 input {
   color: black;
-  width: 80%;
+  width: 100%;
   text-decoration: none;
   margin-bottom: 0.8em;
   padding: 0.8em 0.5em;

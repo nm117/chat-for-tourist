@@ -21,11 +21,11 @@ const AuthModule = {
     }
   },
   actions: {
-    updateUser ({ commit }, user) {
+    updateUser ({ commit }, payload) {
       commit('setUser', {
-        _id: user.uid,
-        email: user.email,
-        username: user.displayName
+        _id: payload._id,
+        email: payload.email,
+        username: payload.username,
       });
     },
     //Signup
@@ -114,7 +114,7 @@ const AuthModule = {
         console.log(error.code);
         console.log(error.message);
       })
-    }
+    },
   }
 };
 

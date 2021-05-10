@@ -25,13 +25,16 @@
 
 <script>
 import firebase from "./firebase";
-import { mapState, mapGetters } from "vuex";
+import { mapGetters } from "vuex";
+
+const db = firebase.firestore();
 
 export default {
   name: "App",
   data: function () {
     return {
-      userId: null,
+      userId: "",
+      username: "",
     }
   },
   directives: {
@@ -42,21 +45,28 @@ export default {
     },
   },
   computed: {
-    ...mapGetters([ "getUser", "isSignIn" ]),
-    ...mapState([ "user" ]),
+    ...mapGetters([ "getUser" ]),
 
     isAuthenticated() {
       return this.getUser;
     },
   },
   created() {
-    firebase.auth().onAuthStateChanged(user => {
-      if(user) {
-        this.$store.dispatch('updateUser', user);
-        console.log(user);
-        this.userId = user.id
-      }
-    });
+    firebase.auth().onAuthStateChanged((user) => {
+      this.userId = user.uid;
+      const usersRef = db.collection("users").doc(this.userId);
+      usersRef.get().then((doc) => {
+        this.username = doc.data().username;
+        if (user) {
+          this.$store.dispatch('updateUser', {
+          _id: user.uid,
+          email: user.email,
+          username: user.displayName || this.username,
+          });
+        }
+      })
+    })
+    console.log(this.getUser);
   },
   methods: {
     signOut() {
