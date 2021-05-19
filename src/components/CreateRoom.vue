@@ -41,7 +41,7 @@ export default {
           .add({
             prefecture: this.$route.params.value,
             roomname: this.newRoomName,
-            created: new Date(),
+            created: firebase.firestore.FieldValue.serverTimestamp(),
           })
           .then((docRef) => {
             this.roomId = docRef.id;

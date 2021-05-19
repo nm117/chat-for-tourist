@@ -33,5 +33,10 @@
         this.rooms = obj;
       });
     },
+    // methods: {
+    //   enterChat(room) {
+    //     if(room.joined || room. )
+    //   }
+    // }
   };
 </script>

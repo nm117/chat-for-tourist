@@ -131,7 +131,7 @@ li {
   margin: auto 0 auto 30px;
   cursor: pointer;
 }
-.router-view {
+.router-view:not(#chat) {
   padding-top: 6em;
 }
 .error-message {
@@ -147,7 +147,6 @@ li {
   text-decoration: underline;
 }
 .pref-roomnames {
-  box-sizing: border-box;
   color: black;
   width: 90%;
   text-decoration: none;

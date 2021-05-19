@@ -8,7 +8,8 @@
       <!-- Email&Password -->
       <input v-model="email" placeholder="Email" type="email" />
       <input v-model="password" placeholder="Password" type="password" />
-      <button @click="signinWithEmail" class="signin">Sign in</button>
+      <div class="forgot-password"><router-link to="/setting/reset_password">Forgot password?</router-link></div>
+      <button @click="signinWithEmail" class="signin-button">Sign in</button>
       <p class="error-message" v-if="getError">{{ getError }}</p>
     </div>
   </div>
@@ -57,11 +58,6 @@ export default {
   background-color: #66bab7;
   height: 100vh;
 }
-* :not(h2):not(.error-message):not(li):not(ul) {
-  border: 1px solid #eee;
-  font-size: 1em;
-  border-radius: 5px;
-}
 .signin-pannel {
   text-align: center;
   width: 90%;
@@ -86,28 +82,38 @@ h2 {
   margin-bottom: 1em;
   font-size: 1.3em;
 }
-.signin {
+.signin-button {
   font-weight: bold;
-  font-size: 1.1em;
   width: 100%;
   padding: 0.8em 0.5em;
-  border-radius: 5px;
+  margin-top: 0.8em;
   border: none;
   background: #c93f47;
   cursor: pointer;
   color: #fff;
+  border-radius: 5px;
 }
 .google-signin {
   width: 100%;
   padding: 0.8em 0.5em;
-  margin-bottom: 4em;
+  margin-bottom: 2em;
+  border: none;
   cursor: pointer;
+  border-radius: 5px;
 }
 input {
   color: black;
   width: 100%;
+  border: 1px solid #eee;
   text-decoration: none;
-  margin-bottom: 0.8em;
+  margin-top: 0.8em;
   padding: 0.8em 0.5em;
+  border-radius: 5px;
+}
+.forgot-password {
+  font-size: 0.9em;
+  text-decoration: underline;
+  border: none;
+  text-align: right;
 }
 </style>

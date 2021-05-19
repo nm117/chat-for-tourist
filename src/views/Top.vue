@@ -226,10 +226,6 @@
         hoverOkinawaOn: false,
       };
     },
-    created() {
-      console.log(this.$store.getters.getUser);
-      console.log(this.hoverHokkaidoOn);
-    },
     computed: {
       getUser() {
         return this.$store.getters.getUser;

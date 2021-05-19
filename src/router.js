@@ -6,6 +6,10 @@ import Signin from '@/views/Signin.vue'
 import Mypage from '@/views/Mypage.vue'
 import Chat from '@/views/Chat.vue'
 import Top from '@/views/Top.vue'
+import SettingEmail from '@/views/SettingEmail.vue'
+import SettingPassword from '@/views/SettingPassword.vue'
+import ResetPassword from '@/views/ResetPassword.vue'
+import RoomList from '@/components/RoomList.vue'
 import CreateRoom from '@/components/CreateRoom.vue'
 import Hokkaido from '@/components/prefs/Hokkaido.vue'
 import Aomori from '@/components/prefs/Aomori.vue'
@@ -99,6 +103,29 @@ export default new VueRouter({
       path: '/top',
       name: 'Top',
       component: Top,
+      beforeEnter: AuthGuard,
+    },
+    {
+      path: '/setting/email',
+      name: 'SettingEmail',
+      component: SettingEmail,
+      beforeEnter: AuthGuard,
+    },
+    {
+      path: '/setting/password',
+      name: 'SettingPassword',
+      component: SettingPassword,
+      beforeEnter: AuthGuard,
+    },
+    {
+      path: '/setting/reset_password',
+      name: 'ResetPassword',
+      component: ResetPassword,
+    },
+    {
+      path: '/roomlist',
+      name: 'RoomList',
+      component: RoomList,
       beforeEnter: AuthGuard,
     },
     {

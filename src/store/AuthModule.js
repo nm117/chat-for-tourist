@@ -29,12 +29,12 @@ const AuthModule = {
       });
     },
     //Signup
-    async signupWithEmail({ commit }, payload) {
-      await firebase.auth().createUserWithEmailAndPassword(payload.email, payload.password)
+    signupWithEmail({ commit }, payload) {
+      firebase.auth().createUserWithEmailAndPassword(payload.email, payload.password)
         .then(user => {
           usersRef.doc(user.user.uid).set({
             username: payload.username,
-            created: new Date(),
+            created: firebase.firestore.FieldValue.serverTimestamp(),
           })
           commit('setUser', user);
           commit('setSignIn', true);
@@ -48,13 +48,13 @@ const AuthModule = {
         }
       );
     },
-    async signupWithGoogle({ commit }) {
-      var provider = new firebase.auth.GoogleAuthProvider();
-      await firebase.auth().signInWithPopup(provider)
+    signupWithGoogle({ commit }) {
+      const provider = new firebase.auth.GoogleAuthProvider();
+      firebase.auth().signInWithPopup(provider)
         .then(result => {
           usersRef.doc(result.user.uid).set({
             username: result.user.displayName,
-            created: new Date(),
+            created: firebase.firestore.FieldValue.serverTimestamp(),
           })          
           commit('setUser', result);
           commit('setSignIn', true);
@@ -69,8 +69,8 @@ const AuthModule = {
       );
     },
     //Signin
-    async signinWithEmail({ commit }, payload) {
-      await firebase.auth().signInWithEmailAndPassword(payload.email, payload.password)
+    signinWithEmail({ commit }, payload) {
+      firebase.auth().signInWithEmailAndPassword(payload.email, payload.password)
         .then(user => {
           commit('setUser', user);
           commit('setSignIn', true);
@@ -84,9 +84,9 @@ const AuthModule = {
         }
       );
     },
-    async signinWithGoogle({ commit }) {
-      var provider = new firebase.auth.GoogleAuthProvider();
-      await firebase.auth().signInWithPopup(provider)
+    signinWithGoogle({ commit }) {
+      const provider = new firebase.auth.GoogleAuthProvider();
+      firebase.auth().signInWithPopup(provider)
         .then(result => {
           commit('setUser', result);
           commit('setSignIn', true)
@@ -101,13 +101,99 @@ const AuthModule = {
       );
     },
     //Signout
-    async signOut({ commit }) {
-      location.reload();
-      await firebase.auth().signOut()
+    signOut({ commit }) {
+      firebase.auth().signOut()
       .then(() => {
         commit('setUser', null)
         commit('setSignIn', false)
+        location.reload();
         console.log("logout");
+      })
+      .catch(error => {
+        commit('setError', error);
+        console.log(error.code);
+        console.log(error.message);
+      })
+    },
+    //Verify email
+    verifyEmail ({ commit }) {
+      const user = firebase.auth().currentUser;
+      user.sendEmailVerification()
+      .then(() => {
+        commit('setMessage', "Email sent to new email adress, please check it.");
+        console.log("Email sent");
+      })
+      .catch(error => {
+        commit('setError', error);
+        console.log(error.code);
+        console.log(error.message);
+      })
+    },
+    //Change email
+    changeEmail({ commit }, payload) {
+      const user = firebase.auth().currentUser;
+      const newEmail = payload.email
+      const userName = payload.username
+      const credential = firebase.auth.EmailAuthProvider.credential(
+        user.email, payload.password);
+      user.reauthenticateWithCredential(credential)
+      .then(() => {
+        console.log("User re-authenticated");
+        user.updateEmail(newEmail)
+        .then(() => {
+          commit('setUser', {
+            _id: user.uid,
+            email: newEmail,
+            username: userName,
+          });
+          commit('setMessage', "New email is successfully changed!");
+          console.log(user);
+          console.log("Email Changed");
+        })
+        .catch(error => {
+          commit('setError', error);
+          console.log(error.code);
+          console.log(error.message);
+        })
+      .catch(error => {
+        commit('setError', error);
+        console.log(error.code);
+        console.log(error.message);
+      })
+      })
+    },
+    //Change password
+    changePassword({ commit }, payload) {
+      const user = firebase.auth().currentUser;
+      const newPassword = payload.newPass;
+      const credential = firebase.auth.EmailAuthProvider.credential(
+        user.email, payload.currentPass);
+      user.reauthenticateWithCredential(credential)
+      .then(() => {
+        console.log("User re-authenticated");
+        user.updatePassword(newPassword)
+        .then(() => {
+          commit('setMessage', "New password is successfully changed!");
+          console.log(user);
+          console.log("Password Changed");
+        })
+        .catch(error => {
+          commit('setError', error);
+          console.log(error.code);
+          console.log(error.message);
+        })
+      .catch(error => {
+        commit('setError', error);
+        console.log(error.code);
+        console.log(error.message);
+      })
+      })
+    },
+    resetPassword({ commit }, payload) {
+      firebase.auth().sendPasswordResetEmail(payload.email)
+      .then(() => {
+        commit('setMessage', "Email sent to your adress.");
+        console.log("Email sent");
       })
       .catch(error => {
         commit('setError', error);
