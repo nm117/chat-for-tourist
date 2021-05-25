@@ -2,125 +2,105 @@ rules_version = '2';
 service cloud.firestore {
   match /databases/{database}/documents {
 
-
-  // サインインの認証
-  function isAuthenticated() {
-    return request.auth != null;
-  }
-  // 本人の認証
-  function isUserAuthenticated(userId) {
-    return isAuthenticated() && userId == request.auth.uid;
-  }
-  // USERS-FIRST
-  function isValidUser(user) {
-    return user.size() == 2
-    && 'created' in user && user.created is timestamp
-    && 'username' in user && user.username is string
-  }
-  // USERS-UPDATE
-  function isValidUserUpdate(user) {
-    return 'updated' in room && room.updated is timestamp
-    && user.username is string
-    && user.bio is string
-    && user.created is timestamp
-  }
-  // ROOMS
-  function isValidRoom(room) {
-    return expense.size() == 3
-    && 'roomname' in room && room.roomname is string
-    && 'prefecture' in room && room.prefecture is string
-    && 'created' in room && room.created is timestamp
-  }
-  // ROOMS-UPDATE
-  function isValidRoomUpdate(room) {
-    return expense.size() == 2
-    && 'joinUsers' in room && room.joinUser is string
-    && room.created is timestamp
-    && 'updated' in room && room.updated is timestamp
-  }
-  // CHATS
-  function isValidChat(chat) {
-    return 'username' in chat && chat.username is string
-    && 'item' in chat && chat.item is string
-    && 'isRead' in chat && chat.isRead is bool;
-    && 'created' in chat && chat.created is timestamp
-  // CHATS-UPDATE
-  function isValidChatUpdate(chat) {
-    return 'isRead' in chat && chat.isRead is bool;
-    && 'isReadUsers' in chat
-    && chat.username is string
-    && chat.item is string
-    && room.created is timestamp
-  // LIKEDUSERS
-  function isValidLikedUsers(likedUsers) {
-    return 'username' in likedUsers && likedUsers.username is string
-    && 'count' in likedUsers && likedUsers.count is int;
-  // LIKEDUSERS-UPDATE
-  function isValidLikedUsersUpdate(likedUsers) {
-    return 'count' in likedUsers && likedUsers.count is int;
-    && likedUsers.username is string
-
-  }
-  function existingData() {
-    return resource.data;
-  }
-  function incomingData() {
-    return request.resource.data;
-  }
+    function isAuthenticated() {
+      return request.auth != null;
+    }
+    function isUserAuthenticated(userId) {
+      return isAuthenticated() && userId == request.auth.uid;
+    }
+    function existingData() {
+      return resource.data;
+    }
+    function incomingData() {
+      return request.resource.data;
+    }
 
 
+    //USERS
     match /users/{userId} {
-      // ユーザー情報　取得
-      allow get: if isUserAuthenticated(userId);
-      // ユーザー情報　作成
+      allow read: if isUserAuthenticated(userId);
       allow create: if isUserAuthenticated(userId)
-                    && isValidUser(incomingData())
-      // ユーザー情報　更新
+                    && isValidUser(incomingData());
       allow update: if isUserAuthenticated(userId)
                     && isValidUserUpdate(incomingData())
-                    && incomingData().created == existingData().created
-
-    match /rooms/{roomsId} {
-      // 取得
-      allow get: if isUserAuthenticated(userId);
-      // 作成
-      allow create: if isUserAuthenticated(userId)
-                    && isValidRoom(incomingData())
-      // 更新
-      allow update: if isUserAuthenticated(userId)
-                    && isValidRoomUpdate(incomingData())
-                    && incomingData().created == existingData().created
+                    && incomingData().created == existingData().created;
+      allow delete: if isUserAuthenticated(userId);
       
-      match /rooms/{roomsId}/chats/{chatsId} {
-      // 取得
-      allow get: if isUserAuthenticated(userId);
-      // 作成
-      allow create: if isUserAuthenticated(userId)
-                    && isValidChat(incomingData())
-                    && incomingData().userId == userId;
-      // 更新
-      allow update: if isUserAuthenticated(userId)
-                    && isValidChatUpdate(incomingData())
-                    && incomingData().created == existingData().created
-                    && incomingData().userId == userId;
-                    && incomingData().isReadUser != existingData().userId;
-      // 削除
-      allow delete: if isUserAuthenticated(userId)
-
-      match /rooms/{roomsId}/chats/{chatsId}/likedUsers/{userId} {
-      // 取得
-      allow get: if isUserAuthenticated(userId);
-      // 作成
-      allow create: if isUserAuthenticated(userId)
-                    && isValidLikedUsers(incomingData())
-                    && incomingData().userId == userId;
-      // 更新
-      allow update: if isUserAuthenticated(userId)
-                    && isValidLikedUsersUpdate(incomingData())
-                    && incomingData().userId == userId;
-      // 削除
-      allow delete: if isUserAuthenticated(userId)
+      function isValidUser(user) {
+        return 'username' in user && user.username is string
+        && 'created' in user && user.created is timestamp;
+      }
+      function isValidUserUpdate(user) {
+        return 'updated' in user && user.updated is timestamp
+        && user.created is timestamp
+        && user.username is string
+        && user.bio is string;
       }
     }
+
+
+    //ROOMS
+    match /rooms/{roomsId} {
+      allow read: if isAuthenticated();
+      allow create: if isAuthenticated()
+                    && isValidRoom(incomingData());
+      allow update: if isAuthenticated()
+                    && isValidRoomUpdate(incomingData())
+                    && incomingData().created == existingData().created;
+
+      function isValidRoom(room) {
+        return 'roomname' in room && room.roomname is string
+        && 'prefecture' in room && room.prefecture is string
+        && 'created' in room && room.created is timestamp;
+      }
+      function isValidRoomUpdate(room) {
+        return 'joinUsers' in room
+        && 'updated' in room && room.updated is timestamp
+        && room.roomname is string
+        && room.prefecture is string
+        && room.created is timestamp;
+      }
+    }
+
+      //CHATS
+      match /rooms/{roomsId}/chats/{chatsId} {
+        allow read: if isAuthenticated();
+        allow create: if isAuthenticated()
+                      && isValidChat(incomingData());
+        allow update: if isAuthenticated()
+                      && isValidChatUpdate(incomingData())
+                      && incomingData().created == existingData().created
+                      && incomingData().item == existingData().item
+        allow delete: if isUserAuthenticated(existingData().userId);
+
+        function isValidChat(chat) {
+          return 'userId' in chat
+          && 'username' in chat && chat.username is string
+          && 'item' in chat && chat.item is string
+          && 'isRead' in chat && chat.isRead is bool
+          && 'created' in chat && chat.created is timestamp
+        }
+        function isValidChatUpdate(chat) {
+          return 'isRead' in chat && chat.isRead is bool
+          && 'isReadUsers' in chat
+        }
+      }
+
+        //LIKEDUSERS
+        match /rooms/{roomsId}/chats/{chatsId}/likedUsers/{userId} {
+          allow read: if isAuthenticated();
+          allow create: if isAuthenticated()
+                        && isValidLikedUsers(incomingData());
+          allow update: if isAuthenticated()
+                        && isValidLikedUsersUpdate(incomingData());
+          allow delete: if isUserAuthenticated(userId);
+
+          function isValidLikedUsers(likedUsers) {
+            return 'username' in likedUsers && likedUsers.username is string;
+          }
+          function isValidLikedUsersUpdate(likedUsers) {
+            return 'username' in likedUsers && likedUsers.username is string;
+          }
+        }
   }
 }
