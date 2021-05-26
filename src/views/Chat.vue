@@ -1,9 +1,16 @@
 <template>
   <div id="chat">
     <div class="room-list">
-      <room-list></room-list>
+      <RoomList ref="roomList"></RoomList>
     </div>
   <div class="chat-room">
+    <div class="roomname">
+      {{ roomname }}
+      <span v-click-outside="hideMenu" @click="openMenu" class="humberger">
+        <font-awesome-icon :icon="['fas', 'bars']"/>
+      </span>
+        <span v-if="isOpen" class="room-leave" @click="leaveRoom(id)">Leave the room</span>
+    </div>
     <textarea
       class="chat-form"
       type="text"
@@ -12,7 +19,7 @@
       v-focus
     ></textarea>
 
-    <div class="chats">
+    <div class="chats" ref="scrollArea">
       <div
         v-for="(chat, id) in chats"
         :key="chat.id"
@@ -50,6 +57,7 @@
 import firebase from "../firebase";
 const db = firebase.firestore();
 import { mapGetters } from "vuex";
+
 import RoomList from '../components/RoomList.vue'
 
 export default {
@@ -62,10 +70,12 @@ export default {
       likesRef: null,
       newChat: "",
       userId: "",
+      roomname: "",
+      isOpen: false,
     };
   },
   components: {
-    'room-list': RoomList,
+    'RoomList': RoomList,
   },
   directives: {
     focus: {
@@ -81,7 +91,7 @@ export default {
       return (chat) => {
         return chat.created.toDate().getHours() + ":" + ("0" + chat.created.toDate().getMinutes()).slice(-2)
       }
-    }
+    },
   },
   created() {
     firebase.auth().onAuthStateChanged((user) => {
@@ -95,6 +105,9 @@ export default {
   mounted() {
     this.loadChat();
   },
+  updated() {
+    this.scrollBottom();
+  },
   watch: {
     id(newId, oldId) {
       console.log(newId, oldId);
@@ -102,15 +115,19 @@ export default {
     },
   },
   methods: {
-    createChat() {
+    async createChat() {
       if (this.newChat) {
-        this.chatsRef.add({
+        await this.chatsRef.add({
           userId: this.userId,
           username: this.getUser.username,
           item: this.newChat,
           created: firebase.firestore.FieldValue.serverTimestamp(),
           isRead: false,
         });
+        db.collection("rooms").doc(this.id).update({
+          updated: firebase.firestore.FieldValue.serverTimestamp(),
+        });
+        this.$refs.roomList.onActive(this.id);
       } else {
         return;
       }
@@ -118,14 +135,11 @@ export default {
       this.scrollBottom();
     },
     scrollBottom() {
-      // this.$nextTick(() => {
-      //   window.scrollTo(0, (document.body.clientHeight - "6em"));
-      // });
-      // this.$nextTick(() => {
-      //   const chatLog = this.$refs.a
-      //   if (!chatLog) return
-      //   chatLog.scrollTop = chatLog.scrollHeight
-      // })
+      this.$nextTick(() => {
+        const chatLog = this.$refs.scrollArea
+        if (!chatLog) return
+        chatLog.scrollTop = chatLog.scrollHeight
+      })
     },
     loadChat() {
       this.chatsRef = db.collection("rooms").doc(this.id).collection("chats");
@@ -135,77 +149,88 @@ export default {
           obj[doc.id] = doc.data();
         });
         this.chats = obj;
-        console.log(this.chats)
-        this.openChat();
       });
+      db.collection("rooms").doc(this.id).get().then((doc) => {
+      this.roomname = doc.data().roomname
+      })
+      this.openChat();
     },
     deleteChat(id) {
       this.chatsRef.doc(id).delete()
     },
     async openChat() {
       let batch = db.batch();
-      const chats = await db.collection("rooms").doc(this.id).collection("chats").where("userId", "!=", this.userId).get();
+      const chats = await db.collection("rooms").doc(this.id).collection("chats").where("userId", "!=", this.getUser._id).get();
       chats.docs.forEach((doc, index) => {
         if ((index + 1) % 500 === 0) {
         batch.commit(); 
         batch = db.batch(); 
         }
         batch.update(doc.ref, {
-          "isRead": true,
-          "isReadUsers": firebase.firestore.FieldValue.arrayUnion(this.userId),
+          'isRead': true,
+          'isReadUsers': firebase.firestore.FieldValue.arrayUnion(this.getUser._id),
         });
       });
-      await batch.commit();
+      batch.commit();
       this.joinChat();
     },
     joinChat() {
       db.collection("rooms").doc(this.id).update({
         joinUsers: firebase.firestore.FieldValue.arrayUnion(this.userId),
-        updated: firebase.firestore.FieldValue.serverTimestamp(),
       })
     },
     pushLike(id) {
       this.chatsRef.doc(id).collection("likedUsers").doc(this.userId).set({
         username: this.getUser.username,
-        count: firebase.firestore.FieldValue.increment(1),
       });
       this.chatsRef.doc(id).update({
         count: firebase.firestore.FieldValue.increment(1)
       });
     },
-    // deleteLike(id) {
-    //   this.chatsRef.doc(id).collection("likedUsers").doc(this.userId).delete();
-
-    //   this.chatsRef.doc(id).add({
-    //     count: firebase.firestore.FieldValue.increment(-1)
-    //   });
-    //   this.loadChat();
-    // },
-    
+    async leaveRoom() {
+      await db.collection("rooms").doc(this.id).update({
+        joinUsers: firebase.firestore.FieldValue.arrayRemove(this.getUser._id)
+      })
+      this.chats = null;
+      this.roomname = null;
+    },
+    openMenu() {
+      this.isOpen = true;
+    },
+    hideMenu() {
+      this.isOpen = false;
+    }
   }
 }
 </script>
 
 <style scoped>
 #chat {
-  height: calc(100vh - 6em);
+  height: 100vh;
+  background: #FFF
 }
 .chat-room {
-  padding-top: 6em;
-  /* width: calc(100vh - 250px); */
-  margin: 0 0 0 200px;
-}
-.chats {
-  margin: 0 3%;
-  height: calc(100vh - 200px);
-  overflow-y: auto;
-  /* width: 80%; */
+  padding-top: 3.5em;
+  width: 100% - 250px;
+  margin: 0 0 0 250px;
 }
 .room-list {
   float: left;
   width: 250px;
+  height: 100%;
   padding-top: 3.5em;
-  height: calc(100vh - 250px);
+}
+.roomname {
+  width: 100%;
+  padding: 0.6em;
+  margin-bottom: 1em;
+  font-weight: bold;
+  text-align: right;
+  background: #F3F4F6
+}
+.chats {
+  height: calc(100vh - 242px);
+  overflow-y: auto;
 }
 button {
   background-color: rgba(0,0,255,0);
@@ -287,5 +312,32 @@ button {
 }
 .created-time{
   margin-left: 0.5em;
+}
+.humberger {
+  font-size: 1.3em;
+  padding: 0.6em 1em;
+  position: relative;
+}
+.room-leave {
+  position: absolute;
+  height: 45px;
+  top: 100px;
+  right: 22px;
+  cursor: pointer;
+  border-radius: 10px;
+  color: white;
+  display: block;
+  padding: 0.6em;
+  background: rgba(0,0,0,0.75);
+  z-index: 2;
+}
+.room-leave:after{
+  position: absolute;
+  border-bottom: 12px solid rgba(0,0,0,0.75);
+  border-left: 10px solid transparent;   
+  border-right: 10px solid transparent;  
+  top: -12px;
+  right: 8px;
+  content: "";
 }
 </style>
