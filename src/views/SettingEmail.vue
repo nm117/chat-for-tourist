@@ -16,8 +16,8 @@
         </div>
       <button @click="changeEmail" class="save-email">Save</button>
         <div class="message">
-          <p class="error-message" v-if="getError">{{ getError }}</p>
-          <p class="get-message" v-if="getMessage">{{ getMessage }}</p>
+          <p class="firebase-error-message" v-if="getError">{{ getError }}</p>
+          <p class="error-message" v-if="getMessage">{{ getMessage }}</p>
         </div>
     </div>
   </div>
