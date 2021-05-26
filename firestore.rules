@@ -20,21 +20,29 @@ service cloud.firestore {
     match /users/{userId} {
       allow read: if isUserAuthenticated(userId);
       allow create: if isUserAuthenticated(userId)
+                    && incomingData().keys().hasAll(['username', 'created'])
                     && isValidUser(incomingData());
       allow update: if isUserAuthenticated(userId)
+                    && incomingData().keys().hasAll(['username', 'created'])
+                    && incomingData().keys().hasOnly(['username', 'created', 'bio', 'icon','updated'])
                     && isValidUserUpdate(incomingData())
                     && incomingData().created == existingData().created;
       allow delete: if isUserAuthenticated(userId);
       
       function isValidUser(user) {
-        return 'username' in user && user.username is string
-        && 'created' in user && user.created is timestamp;
+        return user.username is string
+        && user.created is timestamp;
       }
       function isValidUserUpdate(user) {
-        return 'updated' in user && user.updated is timestamp
+        return (!('updated' in incomingData().keys()) || user.updated is timestamp)
+        && (!('bio' in incomingData().keys()) || user.bio is string)
+        && (!('icon' in incomingData().keys()) || user.icon is string)
+        
+        // return !user.updated in user || user.updated is timestamp
+        // && !user.bio in user || user.bio is string
+        // && !user.icon in user || user.icon is string
         && user.created is timestamp
-        && user.username is string
-        && user.bio is string;
+        && user.username is string;
       }
     }
 
@@ -43,15 +51,17 @@ service cloud.firestore {
     match /rooms/{roomsId} {
       allow read: if isAuthenticated();
       allow create: if isAuthenticated()
+                    && incomingData().keys().hasAll(['roomname', 'prefecture', 'created'])
                     && isValidRoom(incomingData());
       allow update: if isAuthenticated()
+                    && incomingData().keys().hasAll(['roomname', 'prefecture', 'created'])
                     && isValidRoomUpdate(incomingData())
                     && incomingData().created == existingData().created;
 
       function isValidRoom(room) {
-        return 'roomname' in room && room.roomname is string
-        && 'prefecture' in room && room.prefecture is string
-        && 'created' in room && room.created is timestamp;
+        return room.roomname is string
+        && room.prefecture is string
+        && room.created is timestamp;
       }
       function isValidRoomUpdate(room) {
         return 'joinUsers' in room
@@ -66,8 +76,10 @@ service cloud.firestore {
       match /rooms/{roomsId}/chats/{chatsId} {
         allow read: if isAuthenticated();
         allow create: if isAuthenticated()
+                      && incomingData().keys().hasAll(['userId', 'username', 'item', 'isRead', 'created'])
                       && isValidChat(incomingData());
         allow update: if isAuthenticated()
+                      && incomingData().keys().hasAll(['userId', 'username', 'item', 'isRead', 'created'])
                       && isValidChatUpdate(incomingData())
                       && incomingData().created == existingData().created
                       && incomingData().item == existingData().item
@@ -78,11 +90,15 @@ service cloud.firestore {
           && 'username' in chat && chat.username is string
           && 'item' in chat && chat.item is string
           && 'isRead' in chat && chat.isRead is bool
-          && 'created' in chat && chat.created is timestamp
+          && 'created' in chat && chat.created is timestamp;
         }
         function isValidChatUpdate(chat) {
           return 'isRead' in chat && chat.isRead is bool
           && 'isReadUsers' in chat
+          && chat.username is string
+          && chat.item is string
+          && chat.isRead is bool
+          && chat.created is timestamp;
         }
       }
 
