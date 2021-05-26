@@ -4,7 +4,19 @@
       <h2>Your Account</h2>
       <div class="profile">
         <span class="profile-photo">
-          <input type="file" name="prof-photo" class="prof-photo">
+          <input 
+            ref="file" 
+            type="file" 
+            name="icon"
+            class="icon"
+            accept="image/*"
+            @change="setIcon"
+          />
+            <img
+              v-if="this.icon"
+              :src="this.icon"
+              style="width: 130px; margin: 0 10px 0 0"
+            />
         </span>
         <span v-if="!this.usernameEditing" @click="editUsername" class="prof-name">
           <p>Name</p>
@@ -27,7 +39,11 @@
           </div>
       </div>
       <button @click="saveProfile" class="save-profile">Save</button>
+      
+      <p class="firebase-error-message" v-if="getError">{{ getError }}</p>
+      <p class="error-message" v-if="getMessage">{{ getMessage }}</p>
     </div>
+
 
     <div class="setting-pannel">
       <p>Email</p>
@@ -63,6 +79,7 @@ export default {
       password: "",
       username: "",
       bio: "",
+      icon: null,
       profUsername: "",
       profBio: "",
       usernameEditing: false,
@@ -71,6 +88,7 @@ export default {
       bioBorderColor: 'blue',
       nameBorderWidth: '2px',
       bioBorderWidth: '2px',
+      selectedData: null,
     };
   },
   directives: {
@@ -81,7 +99,7 @@ export default {
     },
   },
   computed: {
-    ...mapGetters([ "getUser" ]),
+    ...mapGetters([ "getUser", "getError", "getMessage" ]),
   },
   created() {
     this.loadProfile();
@@ -92,7 +110,37 @@ export default {
       this.usersRef.get().then((doc) => {
         this.username = doc.data().username;
         this.bio = doc.data().bio;
+        this.icon = doc.data().icon;
       })
+    },
+    setIcon(e) {
+      const fileImg = e.target.files[0]
+      this.$store.dispatch('setIcon', fileImg);
+
+      const iconRef = firebase.storage().ref().child('user-image/' + fileImg.name);
+      const user = firebase.auth().currentUser;
+
+      iconRef.put(fileImg).then(() => {
+        iconRef.getDownloadURL().then((url) => {
+          user.updateProfile({
+            photoURL: url,
+          })
+          .then(() => {
+            // commit('setMessage', "Your profile photo is successfully updated!");
+            console.log("Icon updated");
+            this.usersRef.set({
+              icon: user.photoURL,
+            }, { merge: true }
+            );
+            this.uploadProfile();
+          })
+          .catch(error => {
+            // commit('setError', error);
+            console.log(error.code);
+            console.log(error.message);
+          });
+        });
+      });
     },
     editUsername() {
       this.usernameEditing = true;
@@ -136,7 +184,7 @@ export default {
     },
     uploadProfile() {
       this.usersRef.set({
-        updated: new Date()
+        updated: firebase.firestore.FieldValue.serverTimestamp()
         }, { merge: true }
       );
       this.$store.dispatch('updateUser', {
@@ -162,11 +210,6 @@ export default {
 #mypage {
   height: 100vh;
 }
-/* * :not(h2):not(.error-message):not(li):not(ul) {
-  border: 1px solid #eee;
-  font-size: 1em;
-  border-radius: 5px;
-} */
 .mypage-pannel {
   width: 90%;
   background-color: #fff;

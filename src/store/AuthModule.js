@@ -38,8 +38,13 @@ const AuthModule = {
           })
           commit('setUser', user);
           commit('setSignIn', true);
-          console.log(user);
           console.log("signup");
+
+          commit('setUser', {
+            _id: user.user.uid,
+            email: user.user.email,
+            username: payload.username,
+          })
         })
         .catch(error => {
           commit('setError', error);
@@ -58,8 +63,13 @@ const AuthModule = {
           })          
           commit('setUser', result);
           commit('setSignIn', true);
-          console.log(result);
           console.log("signup");
+
+          commit('setUser', {
+            _id: result.user.uid,
+            email: result.user.email,
+            username: result.user.displayName,
+          })
         })
         .catch(error => {
           commit('setError', error);
@@ -74,8 +84,17 @@ const AuthModule = {
         .then(user => {
           commit('setUser', user);
           commit('setSignIn', true);
-          console.log(user);
           console.log("signin");
+          
+          const usersRef = db.collection("users").doc(user.user.uid);
+          usersRef.get().then((doc) => {
+            const username = doc.data().username;
+            commit('setUser', {
+              _id: user.user.uid,
+              email: user.user.email,
+              username: username,
+            })
+          })
         })
         .catch(error => {
           commit('setError', error);
@@ -89,9 +108,18 @@ const AuthModule = {
       firebase.auth().signInWithPopup(provider)
         .then(result => {
           commit('setUser', result);
-          commit('setSignIn', true)
-          console.log(result);
+          commit('setSignIn', true);
           console.log("signin");
+
+          const usersRef = db.collection("users").doc(result.user.uid);
+          usersRef.get().then((doc) => {
+            const username = doc.data().username;
+            commit('setUser', {
+              _id: result.user.uid,
+              email: result.user.email,
+              username: username,
+            })
+          })
         })
         .catch(error => {
           commit('setError', error);
@@ -118,6 +146,7 @@ const AuthModule = {
     //Verify email
     verifyEmail ({ commit }) {
       const user = firebase.auth().currentUser;
+
       user.sendEmailVerification()
       .then(() => {
         commit('setMessage', "Email sent to new email adress, please check it.");
@@ -129,13 +158,34 @@ const AuthModule = {
         console.log(error.message);
       })
     },
+    //set icon
+    setIcon ({ commit }, payload)  {
+      const iconRef = firebase.storage().ref().child(`image/{$payload.fileImg.name}`);
+      const user = firebase.auth().currentUser;
+
+      iconRef.put(payload.fileImg).then(() => {
+        iconRef.getDownloadURL().then((url) => {
+          user.updateProfile({
+            photoURL: url,
+          })
+          .then(() => {
+            commit('setMessage', "Your profile photo is successfully updated!");
+            console.log("Icon updated");
+          })
+          .catch(error => {
+            commit('setError', error);
+            console.log(error.code);
+            console.log(error.message);
+          });
+        });
+      });
+    },
     //Change email
     changeEmail({ commit }, payload) {
       const user = firebase.auth().currentUser;
       const newEmail = payload.email
       const userName = payload.username
-      const credential = firebase.auth.EmailAuthProvider.credential(
-        user.email, payload.password);
+      const credential = firebase.auth.EmailAuthProvider.credential(user.email, payload.password);
       user.reauthenticateWithCredential(credential)
       .then(() => {
         console.log("User re-authenticated");
@@ -147,7 +197,6 @@ const AuthModule = {
             username: userName,
           });
           commit('setMessage', "New email is successfully changed!");
-          console.log(user);
           console.log("Email Changed");
         })
         .catch(error => {
@@ -166,15 +215,13 @@ const AuthModule = {
     changePassword({ commit }, payload) {
       const user = firebase.auth().currentUser;
       const newPassword = payload.newPass;
-      const credential = firebase.auth.EmailAuthProvider.credential(
-        user.email, payload.currentPass);
+      const credential = firebase.auth.EmailAuthProvider.credential(user.email, payload.currentPass);
       user.reauthenticateWithCredential(credential)
       .then(() => {
         console.log("User re-authenticated");
         user.updatePassword(newPassword)
         .then(() => {
           commit('setMessage', "New password is successfully changed!");
-          console.log(user);
           console.log("Password Changed");
         })
         .catch(error => {
