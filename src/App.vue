@@ -6,9 +6,11 @@
           <router-link to="/top" class="title">locals</router-link>
         </div>
         <div class="nav-right">
+          <router-link to="/myroom" class="my-roomlist">My Roomlist</router-link>
           <span @click="signOut" class="signout-button">Logout</span>
         </div>
       </template>
+
       <template v-else>
         <div class="nav-left">
           <router-link to="/" class="title">locals</router-link>
@@ -26,8 +28,6 @@
 <script>
 import firebase from "./firebase";
 import { mapGetters } from "vuex";
-
-const db = firebase.firestore();
 
 export default {
   name: "App",
@@ -54,19 +54,7 @@ export default {
   created() {
     firebase.auth().onAuthStateChanged((user) => {
       this.userId = user.uid;
-      const usersRef = db.collection("users").doc(this.userId);
-      usersRef.get().then((doc) => {
-        this.username = doc.data().username;
-        if (user) {
-          this.$store.dispatch('updateUser', {
-          _id: user.uid,
-          email: user.email,
-          username: user.displayName || this.username,
-          });
-        }
-      })
     })
-    console.log(this.getUser);
   },
   methods: {
     signOut() {
@@ -100,13 +88,9 @@ nav {
 li {
   list-style-type: none;
 }
-.nav-left {
-  margin: auto 0;
-}
 .title {
   font-size: 2em;
   color: #c93f47;
-  margin: 0 auto;
   font-family: 'PT Sans', sans-serif;
 }
 .nav-right {
@@ -125,6 +109,14 @@ li {
   text-decoration: underline;
   margin: auto;
 }
+.my-roomlist {
+  font-weight: bold; 
+  font-size: 1.2em;
+  color: white;
+  /* margin: 60px; */
+  cursor: pointer;
+  margin: auto 30px auto 0;
+}
 .signout-button {
   font-weight: bold; 
   font-size: 1.1em;
@@ -134,7 +126,7 @@ li {
 .router-view:not(#chat) {
   padding-top: 6em;
 }
-.error-message {
+.error-message, .firebase-error-message {
   margin-top: 1em;
   color: red;
 }
@@ -146,7 +138,7 @@ li {
   margin-bottom: 3em;
   text-decoration: underline;
 }
-.pref-roomnames {
+.pref-roomnames, .room-roomnames, .my-roomnames {
   color: black;
   width: 90%;
   text-decoration: none;
@@ -159,32 +151,23 @@ li {
   border-radius: 4px;
   line-height: 1.2em;
 }
-.room-roomnames {
-  color: black;
-  width: 90%;
-  text-decoration: none;
-  text-align: center;
-  margin-bottom: 0.8em;
-  display: inline-block;
-  padding: 0.8em;
-  background: rgb(235, 235, 235);
-  border-radius: 4px;
-  line-height: 1.2em;
+.user-icon {
+  /* background-image:;  表示する画像 */
+  width:  180px;       /* ※縦横を同値に */
+  height: 180px;       /* ※縦横を同値に */
+  border-radius: 50%;  /* 角丸半径を50%にする(=円形にする) */
+  background-position: left top;  /* 横長画像の左上を基準に表示 */
+  display: inline-block;          /* 複数の画像を横に並べたい場合 */
+  background-position: center center;
 }
 @media (min-width: 600px) {
-.room-roomnames {
+.pref-roomnames, .room-roomnames, .my-roomnames {
   width: 500px;
-}
-.pref-roomnames {
-  width: 500px
 }
 }
 @media (min-width: 1025px) {
-.room-roomnames {
+.pref-roomnames, .room-roomnames, .my-roomnames {
   width: 500px;
-}
-.pref-roomnames {
-  width: 500px
 }
 }
 </style>
