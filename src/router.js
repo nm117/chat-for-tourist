@@ -4,6 +4,7 @@ import Home from '@/views/Home.vue'
 import Signup from '@/views/Signup.vue'
 import Signin from '@/views/Signin.vue'
 import Mypage from '@/views/Mypage.vue'
+import Myroom from '@/views/Myroom.vue'
 import Chat from '@/views/Chat.vue'
 import Top from '@/views/Top.vue'
 import SettingEmail from '@/views/SettingEmail.vue'
@@ -91,6 +92,11 @@ export default new VueRouter({
       path: '/mypage',
       name: 'Mypage',
       component: Mypage,
+    },
+    {
+      path: '/myroom',
+      name: 'Myroom',
+      component: Myroom,
     },
     {
       path: '/chat/:id',
