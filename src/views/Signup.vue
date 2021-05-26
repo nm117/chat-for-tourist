@@ -9,7 +9,9 @@
         <li><input v-model="password" placeholder="Password" type="password" /></li>
         <li><button @click="signupWithEmail" class="signup">Sign up</button></li>
       </ul>
-        <p class="error-message" v-if="getError">{{ getError }}</p>
+      
+        <p class="firebase-error-message" v-if="getError">{{ getError }}</p>
+        <p class="error-message" v-if="getMessage">{{ getMessage }}</p>
     </div>
   </div>
 </template>
@@ -27,7 +29,7 @@ export default {
     };
   },
   computed: {
-    ...mapGetters([ "isSignIn", "getError", "getUser" ]),
+    ...mapGetters([ "isSignIn", "getError", "getUser", "getMessage" ]),
   },
   watch: {
     async isSignIn(value) {

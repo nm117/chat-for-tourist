@@ -10,7 +10,9 @@
       <input v-model="password" placeholder="Password" type="password" />
       <div class="forgot-password"><router-link to="/setting/reset_password">Forgot password?</router-link></div>
       <button @click="signinWithEmail" class="signin-button">Sign in</button>
-      <p class="error-message" v-if="getError">{{ getError }}</p>
+      
+      <p class="firebase-error-message" v-if="getError">{{ getError }}</p>
+      <p class="error-message" v-if="getMessage">{{ getMessage }}</p>
     </div>
   </div>
 </template>
@@ -27,7 +29,7 @@ export default {
     };
   },
   computed: {
-    ...mapGetters([ "isSignIn", "getError", "getUser" ]),
+    ...mapGetters([ "isSignIn", "getError", "getUser", "getMessage" ]),
   },
   watch: {
     async isSignIn(value) {
