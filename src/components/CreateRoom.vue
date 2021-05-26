@@ -8,6 +8,8 @@
         placeholder="ROOMNAME here"
         class="input-roomname"
       />
+
+      <p class="error-message" v-if="errorMessage">{{ errorMessage }}</p>
       <button @click="createRoom" class="createroom-button">CREATE NEW ROOM</button>
     </div>
   </div>
@@ -15,29 +17,24 @@
 
 <script>
 import firebase from "../firebase";
+const db = firebase.firestore();
+import { mapGetters } from "vuex";
 
 export default {
   data: function () {
     return {
-      roomsRef: null,
       newRoomName: null,
       roomId: null,
+      errorMessage: "",
     };
   },
-  created() {
-    this.roomsRef = firebase.firestore().collection("rooms");
-    this.roomsRef.onSnapshot((querySnapshot) => {
-      const obj = {};
-      querySnapshot.forEach((doc) => {
-        obj[doc.id] = doc.data();
-      });
-      this.rooms = obj;
-    });
+  computed: {
+    ...mapGetters([ "isSignIn", "getError", "getUser", "getMessage" ]),
   },
   methods: {
     async createRoom() {
       if (this.newRoomName) {
-        await this.roomsRef
+        await db.collection("rooms")
           .add({
             prefecture: this.$route.params.value,
             roomname: this.newRoomName,
@@ -45,9 +42,18 @@ export default {
           })
           .then((docRef) => {
             this.roomId = docRef.id;
+            db.collection("rooms").doc(this.roomId).update({
+              joinUsers: firebase.firestore.FieldValue.arrayUnion(this.getUser._id),
+              updated: firebase.firestore.FieldValue.serverTimestamp(),
+          })
+            this.$router.push("/chat/" + this.roomId);
+          })
+          .catch(error => {
+            this.errorMessage = error.message;
+            console.log(error.code);
+            console.log(error.message);
           });
         console.log(this.roomId);
-        this.$router.push("/chat/" + this.roomId);
         this.newRoom = "";
       }
     },
