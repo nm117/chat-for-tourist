@@ -4,13 +4,13 @@
     <div
       v-for="(room, id) in rooms"
       :key="id"
-      class="rooms-own"
-      :class="{ 'rooms-clicked-own': activeItem === id }"
+      class="rooms"
+      :class="{ 'rooms-clicked': activeItem === id }"
       @click="onActive(id)"
     >
-      <router-link :to="{ name: 'Chat', params: { id: id } }" class="roomname-link-own">
-        <!-- photo -->
-        <span class="roomname-own">{{ room.roomname }}</span>
+      <router-link :to="{ name: 'Chat', params: { id: id } }" class="roomname-link">
+        <div class="roomicon"><img :src="room.roomIcon" /></div>
+        <span class="roomname">{{ room.roomname }}</span>
       </router-link>
     </div>
   </div>
@@ -39,7 +39,7 @@ export default {
   },
   methods: {
     loadRoom() {
-      this.roomsRef = db.collection("rooms").where("joinUsers", "array-contains", this.getUser._id);
+      this.roomsRef = db.collection("rooms").where("joinIds", "array-contains", this.getUser._id);
       this.roomsRef.orderBy("updated", "desc").onSnapshot((querySnapshot) => {
         let obj = {};
         querySnapshot.docs.map((doc) => {
@@ -71,30 +71,38 @@ export default {
   font-weight: bold;
   text-align: center;
 }
-.rooms-own {
+.rooms {
   color: black;
   width: 100%;
   text-decoration: none;
-  display: flex;
-  justify-content: space-between;
 }
-.rooms-clicked-own {
+.rooms-clicked {
   color: black;
   width: 100%;
   text-decoration: none;
   display: flex;
-  justify-content: space-between;
+  /* justify-content: space-between; */
   background: rgba(0, 0, 0, 0.2);
 }
 .rooms-own:hover {
   background: rgba(0, 0, 0, 0.1);
 }
-.roomname-link-own {
+.roomname-link {
   display: block;
-  width: 85%;
-  height: 100%;
+  width: 100%;
+  height: 50px;
+  display: flex;
+  align-items: center;
 }
-.roomname-own {
+.roomicon img {
+  width: 40px;
+  height: 40px;
+  margin: 0 0.5em;
+  border-radius: 50%;
+  object-fit: cover;
+  position: relative;
+}
+e {
   display: block;
   padding: 0.6em;
   width: 90%;
