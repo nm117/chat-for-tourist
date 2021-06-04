@@ -18,31 +18,26 @@ service cloud.firestore {
 
     //USERS
     match /users/{userId} {
-      allow read: if isUserAuthenticated(userId);
+      allow get: if isAuthenticated();
       allow create: if isUserAuthenticated(userId)
-                    && incomingData().keys().hasAll(['username', 'created'])
+                    && incomingData().keys().hasAll(['username', 'avatar', 'created'])
                     && isValidUser(incomingData());
       allow update: if isUserAuthenticated(userId)
-                    && incomingData().keys().hasAll(['username', 'created'])
-                    && incomingData().keys().hasOnly(['username', 'created', 'bio', 'icon','updated'])
                     && isValidUserUpdate(incomingData())
                     && incomingData().created == existingData().created;
       allow delete: if isUserAuthenticated(userId);
       
       function isValidUser(user) {
         return user.username is string
+        && user.avatar is string
         && user.created is timestamp;
       }
       function isValidUserUpdate(user) {
-        return (!('updated' in incomingData().keys()) || user.updated is timestamp)
-        && (!('bio' in incomingData().keys()) || user.bio is string)
-        && (!('icon' in incomingData().keys()) || user.icon is string)
-        
-        // return !user.updated in user || user.updated is timestamp
-        // && !user.bio in user || user.bio is string
-        // && !user.icon in user || user.icon is string
-        && user.created is timestamp
-        && user.username is string;
+        return (!('updated' in user) || user.updated is timestamp)
+        && (!('bio' in user) || user.bio is string)
+        && (!('avatar' in user) || user.avatar is string)
+        && user.username is string
+        && user.created is timestamp;
       }
     }
 
@@ -51,72 +46,129 @@ service cloud.firestore {
     match /rooms/{roomsId} {
       allow read: if isAuthenticated();
       allow create: if isAuthenticated()
-                    && incomingData().keys().hasAll(['roomname', 'prefecture', 'created'])
+                    && incomingData().keys().hasAll(['roomname', 'prefecture', 'roomIcon', 'created'])
                     && isValidRoom(incomingData());
       allow update: if isAuthenticated()
-                    && incomingData().keys().hasAll(['roomname', 'prefecture', 'created'])
+                    && incomingData().keys().hasAll(['roomname', 'prefecture', 'roomIcon', 'created'])
                     && isValidRoomUpdate(incomingData())
                     && incomingData().created == existingData().created;
 
       function isValidRoom(room) {
         return room.roomname is string
         && room.prefecture is string
+        && room.roomIcon is string
         && room.created is timestamp;
       }
       function isValidRoomUpdate(room) {
-        return 'joinUsers' in room
-        && 'updated' in room && room.updated is timestamp
+        return (!('joinIds' in room) || 'joinIds' in room)
+        && (!('updated' in room) || room.updated is timestamp)
+        && (!('roomIcon' in room) || room.updated is timestamp)
         && room.roomname is string
         && room.prefecture is string
         && room.created is timestamp;
       }
     }
 
-      //CHATS
-      match /rooms/{roomsId}/chats/{chatsId} {
-        allow read: if isAuthenticated();
-        allow create: if isAuthenticated()
-                      && incomingData().keys().hasAll(['userId', 'username', 'item', 'isRead', 'created'])
-                      && isValidChat(incomingData());
-        allow update: if isAuthenticated()
-                      && incomingData().keys().hasAll(['userId', 'username', 'item', 'isRead', 'created'])
-                      && isValidChatUpdate(incomingData())
-                      && incomingData().created == existingData().created
-                      && incomingData().item == existingData().item
-        allow delete: if isUserAuthenticated(existingData().userId);
 
-        function isValidChat(chat) {
-          return 'userId' in chat
-          && 'username' in chat && chat.username is string
-          && 'item' in chat && chat.item is string
-          && 'isRead' in chat && chat.isRead is bool
-          && 'created' in chat && chat.created is timestamp;
-        }
-        function isValidChatUpdate(chat) {
-          return 'isRead' in chat && chat.isRead is bool
-          && 'isReadUsers' in chat
-          && chat.username is string
-          && chat.item is string
-          && chat.isRead is bool
-          && chat.created is timestamp;
-        }
+    //CHATS
+    match /rooms/{roomsId}/chats/{chatsId} {
+      allow read: if isAuthenticated();
+      allow create: if isAuthenticated()
+                    && incomingData().keys().hasAll(['userId', 'username', 'item', 'isRead', 'avatar', 'created'])
+                    && isValidChat(incomingData());
+      allow update: if isAuthenticated()
+                    && incomingData().keys().hasAll(['userId', 'username', 'item', 'isRead', 'avatar', 'created'])
+                    && isValidChatUpdate(incomingData())
+                    && incomingData().created == existingData().created
+                    && incomingData().item == existingData().item;
+      allow delete: if isUserAuthenticated(existingData().userId);
+
+      function isValidChat(chat) {
+        return 'userId' in chat
+        && 'username' in chat && chat.username is string
+        && 'item' in chat && chat.item is string
+        && 'avatar' in chat && chat.avatar is string
+        && 'isRead' in chat && chat.isRead is bool
+        && 'created' in chat && chat.created is timestamp;
       }
+      function isValidChatUpdate(chat) {
+        return (!('isReadUsers' in chat) || 'isReadUsers' in chat)
+        && (!('likeCount' in chat) || chat.likeCount is number)
+        && chat.username is string
+        && chat.item is string
+        && chat.avatar is string
+        && chat.isRead is bool
+        && chat.created is timestamp;
+      }
+    }
 
-        //LIKEDUSERS
-        match /rooms/{roomsId}/chats/{chatsId}/likedUsers/{userId} {
-          allow read: if isAuthenticated();
-          allow create: if isAuthenticated()
-                        && isValidLikedUsers(incomingData());
-          allow update: if isAuthenticated()
-                        && isValidLikedUsersUpdate(incomingData());
-          allow delete: if isUserAuthenticated(userId);
 
-          function isValidLikedUsers(likedUsers) {
-            return 'username' in likedUsers && likedUsers.username is string;
-          }
-          function isValidLikedUsersUpdate(likedUsers) {
-            return 'username' in likedUsers && likedUsers.username is string;
-          }
-        }
+    //CHATS Collection Group
+    match /{path=**}/chats/{chatsId} {
+      allow read: if isAuthenticated();
+      allow create: if isAuthenticated()
+                    && incomingData().keys().hasAll(['userId', 'username', 'item', 'isRead', 'created'])
+                    && isValidChat(incomingData());
+      allow update: if isAuthenticated()
+                    && incomingData().keys().hasAll(['userId', 'username', 'item', 'isRead', 'created'])
+                    && isValidChatUpdate(incomingData())
+                    && incomingData().created == existingData().created
+                    && incomingData().item == existingData().item
+      allow delete: if isUserAuthenticated(existingData().userId);
+      
+        function isValidChat(chat) {
+        return 'userId' in chat
+        && 'username' in chat && chat.username is string
+        && 'item' in chat && chat.item is string
+        && 'isRead' in chat && chat.isRead is bool
+        && 'created' in chat && chat.created is timestamp;
+      }
+      function isValidChatUpdate(chat) {
+        return (!('isReadUsers' in chat) || 'isReadUsers' in chat)
+        && (!('avatar' in chat) || chat.avatar is string)
+        && chat.username is string
+        && chat.item is string
+        && chat.isRead is bool
+        && chat.created is timestamp;
+      }
+    }
+
+
+    //LIKEDUSERS
+    match /rooms/{roomsId}/chats/{chatsId}/likedUsers/{userId} {
+      allow read: if isAuthenticated();
+      allow create: if isAuthenticated()
+                    && isValidLikedUsers(incomingData());
+      allow update: if isAuthenticated()
+                    && isValidLikedUsersUpdate(incomingData());
+      allow delete: if isUserAuthenticated(userId);
+
+      function isValidLikedUsers(likedUsers) {
+        return 'username' in likedUsers && likedUsers.username is string;
+      }
+      function isValidLikedUsersUpdate(likedUsers) {
+        return 'username' in likedUsers && likedUsers.username is string;
+      }
+    }
+
+
+    //JOINUSERS
+    match /rooms/{roomsId}/joinUsers/{userId} {
+      allow read: if isAuthenticated();
+      allow create: if isAuthenticated()
+                    && isValidJoinUsers(incomingData());
+      allow update: if isAuthenticated()
+                    && isValidJoinUsersUpdate(incomingData());
+      allow delete: if isUserAuthenticated(userId);
+
+      function isValidJoinUsers(joinUsers) {
+        return 'username' in joinUsers;
+      }
+      function isValidJoinUsersUpdate(joinUsers) {
+        return (!('username' in joinUsers) || 'username' in joinUsers)
+        && (!('unreadMessage' in joinUsers) || joinUsers.unreadMessage is number);
+      }
+    }
+    
   }
 }
