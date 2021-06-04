@@ -4,6 +4,7 @@
       <h2>CREATE YOUR ACCOUNT</h2>
       <ul>
         <li><button @click="signupWithGoogle" class="google-signup">Google Signup</button></li>
+        <li><button @click="signinForGuest" class="guest-signin">I am a guest</button></li>
         <li><input v-model="email" placeholder="Email" type="email" /></li>
         <li><input v-model="displayName" placeholder="Your Name" type="text" /></li>
         <li><input v-model="password" placeholder="Password" type="password" /></li>
@@ -53,6 +54,9 @@ export default {
     signupWithGoogle() {
       this.$store.dispatch("signupWithGoogle");
     },
+    signinForGuest() {
+      this.$store.dispatch("signinForGuest");
+    }
   },
 };
 </script>
@@ -109,7 +113,14 @@ h2 {
 .google-signup {
   width: 100%;
   padding: 0.8em 0.5em;
-  margin-bottom: 4em;
+  margin-bottom: 1em;
+  cursor: pointer;
+}
+.guest-signin {
+  background: #84aaf1;
+  width: 100%;
+  padding: 0.8em 0.5em;
+  margin-bottom: 2em;
   cursor: pointer;
 }
 input {
