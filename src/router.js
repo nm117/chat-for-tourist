@@ -5,13 +5,16 @@ import Signup from '@/views/Signup.vue'
 import Signin from '@/views/Signin.vue'
 import Mypage from '@/views/Mypage.vue'
 import Myroom from '@/views/Myroom.vue'
+import Roominfo from '@/views/Roominfo.vue'
 import Chat from '@/views/Chat.vue'
 import Top from '@/views/Top.vue'
 import SettingEmail from '@/views/SettingEmail.vue'
 import SettingPassword from '@/views/SettingPassword.vue'
 import ResetPassword from '@/views/ResetPassword.vue'
+import CreateRoom from '@/views/CreateRoom.vue'
 import RoomList from '@/components/RoomList.vue'
-import CreateRoom from '@/components/CreateRoom.vue'
+import UserInfo from '@/components/UserInfo.vue'
+import UnreadModal from '@/components/UnreadModal.vue'
 import Hokkaido from '@/components/prefs/Hokkaido.vue'
 import Aomori from '@/components/prefs/Aomori.vue'
 import Akita from '@/components/prefs/Akita.vue'
@@ -92,11 +95,20 @@ export default new VueRouter({
       path: '/mypage',
       name: 'Mypage',
       component: Mypage,
+      beforeEnter: AuthGuard,
     },
     {
       path: '/myroom',
       name: 'Myroom',
       component: Myroom,
+      beforeEnter: AuthGuard,
+    },
+    {
+      path: '/roominfo/:id',
+      name: 'Roominfo',
+      component: Roominfo,
+      props: true,
+      beforeEnter: AuthGuard,
     },
     {
       path: '/chat/:id',
@@ -127,12 +139,23 @@ export default new VueRouter({
       path: '/setting/reset_password',
       name: 'ResetPassword',
       component: ResetPassword,
+      beforeEnter: AuthGuard,
     },
     {
       path: '/roomlist',
       name: 'RoomList',
       component: RoomList,
       beforeEnter: AuthGuard,
+    },
+    {
+      path: '/userinfo',
+      name: 'UserInfo',
+      component: UserInfo,
+    },
+    {
+      path: '/unread_modal',
+      name: 'UnreadModal',
+      component: UnreadModal,
     },
     {
       path: '/createroom/:value',
