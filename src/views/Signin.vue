@@ -5,6 +5,7 @@
 
       <!-- Google -->
       <button @click="signinWithGoogle" class="google-signin">Google Signin</button>
+      <button @click="signinForGuest" class="guest-signin">I am a guest</button>
       <!-- Email&Password -->
       <input v-model="email" placeholder="Email" type="email" />
       <input v-model="password" placeholder="Password" type="password" />
@@ -51,6 +52,9 @@ export default {
     signinWithGoogle() {
       this.$store.dispatch("signinWithGoogle");
     },
+    signinForGuest() {
+      this.$store.dispatch("signinForGuest");
+    }
   },
 };
 </script>
@@ -89,7 +93,7 @@ h2 {
   width: 100%;
   padding: 0.8em 0.5em;
   margin-top: 0.8em;
-  border: none;
+  border: 1px solid #eee;
   background: #c93f47;
   cursor: pointer;
   color: #fff;
@@ -98,10 +102,19 @@ h2 {
 .google-signin {
   width: 100%;
   padding: 0.8em 0.5em;
-  margin-bottom: 2em;
-  border: none;
+  margin-bottom: 1em;
+  border: 1px solid #eee;
   cursor: pointer;
   border-radius: 5px;
+}
+.guest-signin {
+  background: #84aaf1;
+  width: 100%;
+  padding: 0.8em 0.5em;
+  margin-bottom: 2em;
+  cursor: pointer;
+  border-radius: 5px;
+  border: 1px solid #eee;
 }
 input {
   color: black;
