@@ -29,22 +29,25 @@ const AuthModule = {
       });
     },
     //Signup
-    signupWithEmail({ commit }, payload) {
-      firebase.auth().createUserWithEmailAndPassword(payload.email, payload.password)
+    async signupWithEmail({ commit, dispatch }, payload) {
+      await firebase.auth().createUserWithEmailAndPassword(payload.email, payload.password)
         .then(user => {
           usersRef.doc(user.user.uid).set({
             username: payload.username,
+            avatar: 'https://firebasestorage.googleapis.com/v0/b/vue-chat-tourist.appspot.com/o/user-image%2FLocals_userAvatar_original.gif?alt=media&token=3afc5ea3-38b1-408a-819b-16cc465cd728',
             created: firebase.firestore.FieldValue.serverTimestamp(),
           })
           commit('setUser', user);
           commit('setSignIn', true);
           console.log("signup");
+          console.log(user.user);
 
           commit('setUser', {
             _id: user.user.uid,
             email: user.user.email,
             username: payload.username,
           })
+          dispatch('updateProfile', user.user);
         })
         .catch(error => {
           commit('setError', error);
@@ -52,15 +55,17 @@ const AuthModule = {
           console.log(error.message);
         }
       );
+      dispatch('updateProfile');
     },
-    signupWithGoogle({ commit }) {
+    async signupWithGoogle({ commit, dispatch }) {
       const provider = new firebase.auth.GoogleAuthProvider();
-      firebase.auth().signInWithPopup(provider)
+      await firebase.auth().signInWithPopup(provider)
         .then(result => {
           usersRef.doc(result.user.uid).set({
             username: result.user.displayName,
+            avatar: 'https://firebasestorage.googleapis.com/v0/b/vue-chat-tourist.appspot.com/o/user-image%2FLocals_userAvatar_original.gif?alt=media&token=3afc5ea3-38b1-408a-819b-16cc465cd728',
             created: firebase.firestore.FieldValue.serverTimestamp(),
-          })          
+          })
           commit('setUser', result);
           commit('setSignIn', true);
           console.log("signup");
@@ -77,6 +82,18 @@ const AuthModule = {
           console.log(error.message);
         }
       );
+      dispatch('updateProfile');
+    },
+    updateProfile() {
+      const user = firebase.auth().currentUser;
+      user.updateProfile({
+        photoURL: 'https://firebasestorage.googleapis.com/v0/b/vue-chat-tourist.appspot.com/o/user-image%2FLocals_userAvatar_original.gif?alt=media&token=3afc5ea3-38b1-408a-819b-16cc465cd728',
+      }).then(() => {
+        console.log("original icon is set");
+      }).catch(error => {
+        console.log(error.code);
+        console.log(error.message);
+      });
     },
     //Signin
     signinWithEmail({ commit }, payload) {
@@ -128,6 +145,30 @@ const AuthModule = {
         }
       );
     },
+    signinForGuest({ commit }) {
+      firebase.auth().signInWithEmailAndPassword('guestuser@locals.com', 'locals123')
+        .then(user => {
+          commit('setUser', user);
+          commit('setSignIn', true);
+          console.log("guest signin");
+          
+          const usersRef = db.collection("users").doc(user.user.uid);
+          usersRef.get().then((doc) => {
+            const username = doc.data().username;
+            commit('setUser', {
+              _id: user.user.uid,
+              email: user.user.email,
+              username: username,
+            })
+          })
+        })
+        .catch(error => {
+          commit('setError', error);
+          console.log(error.code);
+          console.log(error.message);
+        }
+      );
+    },
     //Signout
     signOut({ commit }) {
       firebase.auth().signOut()
@@ -159,16 +200,21 @@ const AuthModule = {
       })
     },
     //set icon
-    setIcon ({ commit }, payload)  {
-      const iconRef = firebase.storage().ref().child(`image/{$payload.fileImg.name}`);
+    setAvatar ({ commit }, payload)  {
       const user = firebase.auth().currentUser;
+      const usersRef = db.collection("users").doc(user.uid);
+      const avatarRef = firebase.storage().ref().child('user-image/' + payload.fileImgName);
 
-      iconRef.put(payload.fileImg).then(() => {
-        iconRef.getDownloadURL().then((url) => {
+      avatarRef.put(payload.fileImg).then(() => {
+        avatarRef.getDownloadURL().then((url) => {
           user.updateProfile({
             photoURL: url,
           })
           .then(() => {
+            usersRef.update({
+              avatar: user.photoURL,
+              updated: firebase.firestore.FieldValue.serverTimestamp()
+            });
             commit('setMessage', "Your profile photo is successfully updated!");
             console.log("Icon updated");
           })
