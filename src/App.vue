@@ -7,7 +7,13 @@
         </div>
         <div class="nav-right">
           <router-link to="/myroom" class="my-roomlist">My Roomlist</router-link>
-          <span @click="signOut" class="signout-button">Logout</span>
+          <span v-click-outside="hideUserMenu" @click="openUserMenu" class="user-menu">
+            <font-awesome-icon :icon="['far', 'user-circle']"/>
+          </span>
+          <div v-if="isUsermenuOpen" class="user-menu-open">
+            <router-link to="/mypage" class="mypage">Mypage</router-link><hr>
+            <span @click="signOut" class="signout-button">Signout</span>
+          </div>
         </div>
       </template>
 
@@ -35,6 +41,7 @@ export default {
     return {
       userId: "",
       username: "",
+      isUsermenuOpen: false,
     }
   },
   directives: {
@@ -54,12 +61,19 @@ export default {
   created() {
     firebase.auth().onAuthStateChanged((user) => {
       this.userId = user.uid;
+      console.log(user)
     })
   },
   methods: {
     signOut() {
       this.$store.dispatch('signOut');
       console.log('logout');
+    },
+    openUserMenu() {
+      this.isUsermenuOpen = true;
+    },
+    hideUserMenu() {
+      this.isUsermenuOpen = false;
     }
   },
 };
@@ -80,7 +94,7 @@ nav {
   background: #66BAB7;
   height: 3.5em;
   width: 100%;
-  padding: 0 2%;
+  padding: 0 1em;
   position: fixed;
   display: flex;
   justify-content: space-between;
@@ -109,19 +123,49 @@ li {
   text-decoration: underline;
   margin: auto;
 }
+.user-menu {
+  position: relative;
+  font-size: 2em;
+  padding: 0.2em 0.2em 0 0;
+}
+.user-menu-open {
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+  width: 100px;
+  top: 58px;
+  right: 20px;
+  border-radius: 10px;
+  color: white;
+  padding: 0.6em;
+  background: rgba(0,0,0,0.75);
+  z-index: 10;
+}
+.user-menu-open hr {
+  width: 100%;
+}
+.user-menu-open:after{
+  position: absolute;
+  border-bottom: 12px solid rgba(0,0,0,0.75);
+  border-left: 10px solid transparent;   
+  border-right: 10px solid transparent;  
+  top: -12px;
+  right: 8px;
+  content: "";
+}
+.mypage, .signout-button {
+  font-weight: bold; 
+  color: white;
+  font-size: 1em;
+  cursor: pointer;
+}
 .my-roomlist {
   font-weight: bold; 
   font-size: 1.2em;
   color: white;
-  /* margin: 60px; */
   cursor: pointer;
   margin: auto 30px auto 0;
-}
-.signout-button {
-  font-weight: bold; 
-  font-size: 1.1em;
-  margin: auto 0 auto 30px;
-  cursor: pointer;
 }
 .router-view:not(#chat) {
   padding-top: 6em;
@@ -150,15 +194,6 @@ li {
   background: rgb(235, 235, 235);
   border-radius: 4px;
   line-height: 1.2em;
-}
-.user-icon {
-  /* background-image:;  表示する画像 */
-  width:  180px;       /* ※縦横を同値に */
-  height: 180px;       /* ※縦横を同値に */
-  border-radius: 50%;  /* 角丸半径を50%にする(=円形にする) */
-  background-position: left top;  /* 横長画像の左上を基準に表示 */
-  display: inline-block;          /* 複数の画像を横に並べたい場合 */
-  background-position: center center;
 }
 @media (min-width: 600px) {
 .pref-roomnames, .room-roomnames, .my-roomnames {
