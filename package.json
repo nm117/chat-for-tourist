@@ -34,7 +34,9 @@
     "eslint-plugin-vue": "^6.2.2",
     "google-fonts-webpack-plugin": "^0.4.4",
     "modern-css-reset": "^1.4.0",
-    "vue-template-compiler": "^2.6.11"
+    "vue-cli-plugin-webpack-bundle-analyzer": "~4.0.0",
+    "vue-template-compiler": "^2.6.11",
+    "webpack-bundle-analyzer": "^4.4.2"
   },
   "eslintConfig": {
     "root": true,
