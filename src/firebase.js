@@ -13,6 +13,8 @@ var firebaseConfig = {
   appId: process.env.VUE_APP_FIREBASE_APP_ID
 };
 
+
+
 firebase.initializeApp(firebaseConfig);
 firebase.auth().setPersistence(firebase.auth.Auth.Persistence.LOCAL);
 
