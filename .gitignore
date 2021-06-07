@@ -1,8 +1,8 @@
 .DS_Store
 node_modules
 /dist
+.firebase
 .firebaserc
-firebase.js
 firestore-debug.log
 ui-debug.log
 
