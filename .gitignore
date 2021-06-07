@@ -1,6 +1,12 @@
 .DS_Store
 node_modules
 /dist
+.firebaseerc
+./firebase
+./github
+.firebase.js
+.firestore-debug.log
+.ui-debug.log
 
 
 # local env files
