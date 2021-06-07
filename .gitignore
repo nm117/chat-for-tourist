@@ -2,8 +2,6 @@
 node_modules
 /dist
 .firebaserc
-./firebase
-./github
 firebase.js
 firestore-debug.log
 ui-debug.log
