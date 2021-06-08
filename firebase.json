@@ -10,11 +10,18 @@
       "**/.*",
       "**/node_modules/**"
     ],
+<<<<<<< HEAD
     "rewrites": [
       {
         "source": "**",
         "destination": "/index.html"
       }
     ]
+=======
+    "rewrites": [ {
+      "source": "**",
+      "destination": "/index.html"
+    } ]
+>>>>>>> sub1
   }
 }

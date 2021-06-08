@@ -36,7 +36,7 @@ export default {
   },
   methods: {
     loadRoom() {
-      this.roomsRef = db.collection("rooms").where("joinUsers", "array-contains", this.getUser._id);
+      this.roomsRef = db.collection("rooms").where("joinIds", "array-contains", this.getUser._id);
       this.roomsRef.orderBy("updated", "desc").onSnapshot((querySnapshot) => {
         let obj = {};
         querySnapshot.docs.map((doc) => {

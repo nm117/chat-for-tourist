@@ -380,24 +380,6 @@ button {
 .chat-message-own {
   background: #deefe8;
 }
-.chat-message::before {
-  position: absolute;
-  content: " ";
-  display: block;
-  left: -12px;
-  bottom: 12px;
-  border: 3px solid transparent;
-  border-right: 12px solid #efefef;
-}
-.chat-message-own::after {
-  position: absolute;
-  content: " ";
-  display: block;
-  right: -12px;
-  bottom: 20px;
-  border: 3px solid transparent;
-  border-left: 12px solid #deefe8;
-}
 .chat-delete {
   margin-left: 1.5em;
   padding: 0 0.2em;
@@ -461,8 +443,8 @@ button {
 }
 .chat-avatar-own img,
 .chat-avatar img {
-  width: 45px;
-  height: 45px;
+  width: 35px;
+  height: 35px;
   border-radius: 50%;
   object-fit: cover;
   cursor: pointer;
