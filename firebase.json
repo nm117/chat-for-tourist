@@ -11,17 +11,23 @@
       "**/node_modules/**"
     ],
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> sub1
     "rewrites": [
       {
         "source": "**",
         "destination": "/index.html"
       }
     ]
+<<<<<<< HEAD
 =======
     "rewrites": [ {
       "source": "**",
       "destination": "/index.html"
     } ]
+>>>>>>> sub1
+=======
 >>>>>>> sub1
   }
 }
