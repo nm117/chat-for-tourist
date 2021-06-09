@@ -150,6 +150,11 @@ export default {
 <style scoped>
 #roominfo {
   height: 100vh;
+  padding-top: 5em;
+}
+h2 {
+  text-align: center;
+  margin-bottom: 1em;
 }
 .roominfo-pannel {
   width: 90%;
@@ -163,11 +168,7 @@ export default {
 .room-icon {
   display: flex;
   justify-content: center;
-  margin: 1.5em auto 2em auto;
-}
-h2 {
-  text-align: center;
-  margin-bottom: 1.5em;
+  margin: 1em auto;
 }
 .roominfo-roomname {
   width: 100%;
@@ -182,7 +183,6 @@ h2 {
   border-style: solid;
   border-radius: 5px;
   padding: 0.8em 0.5em;
-  margin-bottom: 2em;
 }
 .roominfo-roomname-editing textarea {
   width: 100%;
@@ -192,7 +192,7 @@ h2 {
 .roominfo-pref, .join-users {
   text-align: center;
   font-weight: bold;
-  padding: 1em;
+  padding: 0.8em;
   margin-bottom: 1em;
   background: rgb(235, 235, 235, 0.2);
   border-radius: 20px;
@@ -207,8 +207,8 @@ p:not(.red-color) {
 .save-roomname {
   width: 50%;
   display: block;
-  padding: 0.8em 0.5em;
-  margin: 0 0 0 auto;
+  padding: 0.6em 0.3em;
+  margin: 1em 0 0 auto;
   cursor: pointer;
   font-weight: bold;
   font-size: 1.1em;
@@ -237,14 +237,41 @@ label {
   cursor: pointer;
 }
 @media (min-width: 600px) {
+  #roominfo {
+  padding-top: 6em;
+  }
   .roominfo-pannel {
     width: 450px;
     box-shadow: 15px 15px 0px rgba(0, 0, 0, 0.1);
+  }
+  h2 {
+  margin-bottom: 1.5em;
+  }
+  .room-icon {
+  margin: 1.5em auto 2em auto;
+  }
+  .roominfo-pref, .join-users {
+    padding: 1em;
+  }
+  .save-roomname {
+    padding: 0.8em 0.5em; 
   }
 }
 @media (min-width: 1025px) {
   .roominfo-pannel {
     box-shadow: 15px 15px 0px rgba(0, 0, 0, 0.1);
+  }
+  h2 {
+  margin-bottom: 1.5em;
+  }
+  .room-icon {
+  margin: 1.5em auto 2em auto;
+  }
+  .roominfo-pref, .join-users {
+    padding: 1em; 
+  }
+  .save-roomname {
+    padding: 0.8em 0.5em;
   }
 }
 </style>

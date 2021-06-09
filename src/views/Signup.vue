@@ -8,7 +8,7 @@
         <li><input v-model="email" placeholder="Email" type="email" /></li>
         <li><input v-model="displayName" placeholder="Your Name" type="text" /></li>
         <li><input v-model="password" placeholder="Password" type="password" /></li>
-        <li><button @click="signupWithEmail" class="signup">Sign up</button></li>
+        <li><button @click="signupWithEmail" class="signup-button">Sign up</button></li>
       </ul>
       
         <p class="firebase-error-message" v-if="getError">{{ getError }}</p>
@@ -65,6 +65,7 @@ export default {
 #signup {
   background-color: #66bab7;
   height: 100vh;
+  padding-top: 2.5em;
 }
 * :not(h2):not(.error-message):not(li):not(ul) {
   border: 1px solid #eee;
@@ -76,8 +77,8 @@ export default {
   width: 90%;
   box-sizing: border-box;
   background-color: #fff;
-  border-radius: 10px;
-  padding: 50px 20px;
+  border-radius: 40px;
+  padding: 50px 20px 25px 20px;
   margin: 50px auto;
   box-shadow: 10px 10px 0px rgba(0, 0, 0, 0.1);
 }
@@ -100,7 +101,7 @@ h2 {
   margin-bottom: 1em;
   font-size: 1.3em;
 }
-.signup {
+.signup-button {
   font-weight: bold;
   font-size: 1.1em;
   width: 100%;
@@ -129,6 +130,15 @@ input {
   margin-bottom: 0.8em;
   padding: 0.8em 0.5em;
   color: black;
-
+}
+@media (min-width: 600px) {
+  #signup {
+  padding-top: 6em;
+}
+}
+@media (min-width: 1025px) {
+  #signup {
+  padding-top: 6em;
+}
 }
 </style>

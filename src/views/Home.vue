@@ -20,12 +20,12 @@
       <div class="about">
         <img src="@/assets/about-3.jpg" class="sub-photo" alt="Oboke" />
         <h3>DISCOVER</h3>
-        <p>hired tourist spots and views</p>
+        <p>unexplored places</p>
       </div>
       <div class="about">
         <img src="@/assets/about-4.jpg" class="sub-photo" alt="Zao" />
-        <h3>FIND</h3>
-        <p>unique places not found in guidebooks</p>
+        <h3>ENJOY</h3>
+        <p>the trip with no stress and worries</p>
       </div>
     </div>
   </div>
@@ -35,7 +35,7 @@
 .top-bg {
   background-color: #66bab7;
   padding: 0px;
-  height: 20em;
+  height: 16em;
   margin: -3em 0 3em 0;
   width: 100%;
 }
@@ -43,7 +43,7 @@ h1 {
   color: white;
   font-style: italic;
   font-size: 2em;
-  padding: 100px 0 0 60px;
+  padding: 70px 0 0 30px;
 }
 h2 {
   text-align: left;
@@ -56,6 +56,8 @@ h3 {
 }
 p {
   font-size: 1em;
+  text-align: right;
+  margin-right: 1em;
 }
 hr {
   color: gray;
@@ -77,12 +79,24 @@ hr {
     margin: 0 1em;
     max-width: 40%;
   }
+  h1 {
+  padding: 130px 0 0 60px;
+}
+.top-bg {
+  height: 20em;
+}
 }
 @media (min-width: 1025px) {
   .about {
     margin: 0 1em;
     max-width: 20%;
   }
+  h1 {
+  padding: 130px 0 0 60px;
+}
+.top-bg {
+  height: 20em;
+}
 }
 .sub-photo {
   width: 95%;

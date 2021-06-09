@@ -161,7 +161,6 @@ export default {
     id() {
       this.loadChat();
       this.setJoinUsers();
-      console.log("b");
     },
   },
   methods: {
@@ -284,6 +283,7 @@ export default {
       db.collection("rooms").doc(this.id).collection("joinUsers").doc(this.getUser._id).delete();
       this.chats = null;
       this.roomname = null;
+      this.joinIds = null;
     },
 
     deleteChat(id) {
@@ -320,6 +320,7 @@ export default {
 
 <style scoped>
 #chat {
+  width: 100%;
   height: 100vh;
   background: #fff;
 }
@@ -331,15 +332,16 @@ export default {
 }
 .roomname {
   width: 100%;
-  height: 3em;
-  padding: 0.5em 0.5em 0.6em 0;
+  min-height: 3em;
+  padding: 0.5em;
   margin-bottom: 1em;
   font-weight: bold;
-  text-align: right;
   background: #f3f4f6;
+  display: flex;
+  justify-content: space-between;
 }
 .chats {
-  height: calc(100vh - 242px);
+  height: calc(100vh - 255px);
   overflow-y: auto;
 }
 button {
@@ -359,23 +361,23 @@ button {
 .chat-item {
   display: flex;
   align-items: center;
-  margin: 0 0 0.7em 2em;
+  margin: 0 0 0.7em 0.5em;
 }
 .chat-item-own {
   display: flex;
   justify-content: flex-end;
   align-items: center;
-  margin: 0 2em 0.7em 0;
+  margin: 0 0.5em 0.7em 0;
 }
 .chat-message,
 .chat-message-own {
-  position: relative;
   display: inline-block;
   padding: 0.6em;
   border-radius: 20px;
-  line-height: 1.1em;
+  line-height: 1.5em;
   background: #efefef;
-  max-width: 75%;
+  max-width: 60%;
+  white-space: pre-wrap;
 }
 .chat-message-own {
   background: #deefe8;
@@ -409,9 +411,15 @@ button {
 .created-time {
   margin-left: 0.5em;
 }
+.chat-avatar-own {
+  margin-left: 1em;
+}
+.chat-avatar {
+  margin-right: 0.6em;
+}
 .humberger {
   font-size: 1.3em;
-  padding: 0.6em 1em;
+  padding: 0 1em;
 }
 .humberger-open {
   position: absolute;
@@ -435,12 +443,6 @@ button {
   right: 8px;
   content: "";
 }
-.chat-avatar-own {
-  margin-left: 1em;
-}
-.chat-avatar {
-  margin-right: 0.6em;
-}
 .chat-avatar-own img,
 .chat-avatar img {
   width: 35px;
@@ -454,41 +456,61 @@ button {
   flex-direction: column;
 }
 @media (min-width: 600px) {
-  .pref-roomnames,
-  .room-roomnames,
-  .my-roomnames {
-    width: 500px;
-  }
-  .room-list {
-    display: block;
-    float: left;
-    width: 250px;
-    height: 100%;
-    padding-top: 3.5em;
-  }
-  .chat-room {
-    padding-top: 3.5em;
-    width: 100% - 250px;
-    margin: 0 0 0 250px;
-  }
+.room-list {
+  display: block;
+  float: left;
+  width: 280px;
+  height: 100%;
+  padding-top: 3.5em;
+}
+.chat-room {
+  padding-top: 3.5em;
+  width: 100% - 280px;
+  margin: 0 0 0 280px;
+}
+.roomname {
+  height: 3em;
+  padding: 0.5em 0.5em 0.6em 0;
+  margin-bottom: 1em;
+  justify-content: flex-end;
+}
+.chat-item {
+  margin: 0 0 0.7em 2em;
+}
+.chat-item-own {
+  margin: 0 2em 0.7em 0;
+}
+.chats {
+  height: calc(100vh - 242px);
+}
 }
 @media (min-width: 1025px) {
-  .pref-roomnames,
-  .room-roomnames,
-  .my-roomnames {
-    width: 500px;
-  }
-  .room-list {
-    display: block;
-    float: left;
-    width: 250px;
-    height: 100%;
-    padding-top: 3.5em;
-  }
-  .chat-room {
-    padding-top: 3.5em;
-    width: 100% - 250px;
-    margin: 0 0 0 250px;
-  }
+.room-list {
+  display: block;
+  float: left;
+  width: 280px;
+  height: 100%;
+  padding-top: 3.5em;
+}
+.chat-room {
+  padding-top: 3.5em;
+  width: 100% - 280px;
+  margin: 0 0 0 280px;
+}
+.roomname {
+  height: 3em;
+  padding: 0.5em 0.5em 0.6em 0;
+  margin-bottom: 1em;
+  justify-content: flex-end;
+}
+.chat-item {
+  margin: 0 0 0.7em 2em;
+}
+.chat-item-own {
+  margin: 0 2em 0.7em 0;
+}
+.chats {
+  height: calc(100vh - 242px);
+}
 }
 </style>
