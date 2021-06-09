@@ -1,7 +1,7 @@
 <template>
   <div id="create-room">
     <h2>What about do you want to talk?</h2>
-    <div class="newroom">
+    <div class="newroom-pannel">
       <h3>{{ $route.params.value }} pref. page</h3>
       <input
         v-model="newRoomName"
@@ -72,14 +72,14 @@ export default {
   height: auto;
   text-align: center;
 }
-.newroom {
+.newroom-pannel {
   width: 90%;
   margin: 5% auto;
   border: solid 1.5px;
   border-radius: 10px;
   padding: 50px 20px;
   margin: 50px auto;
-  box-shadow: 15px 15px 0px rgba(0, 0, 0, 0.1);
+  box-shadow: 10px 10px 0px rgba(0, 0, 0, 0.1);
 }
 a {
   padding: 0 0.3em;
@@ -116,16 +116,18 @@ h3 {
   cursor: pointer;
 }
 @media (min-width: 600px) {
-  .newroom {
+  .newroom-pannel {
     width: 450px;
+    box-shadow: 15px 15px 0px rgba(0, 0, 0, 0.1);
   }
   h2 {
     font-size: 1.5em;
   }
 }
 @media (min-width: 1025px) {
-  .newroom {
+  .newroom-pannel {
     width: 450px;
+    box-shadow: 15px 15px 0px rgba(0, 0, 0, 0.1);
   }
   #create-room {
     height: 100vh;

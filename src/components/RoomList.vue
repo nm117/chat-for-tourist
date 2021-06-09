@@ -80,31 +80,27 @@ export default {
   color: black;
   width: 100%;
   text-decoration: none;
-  display: flex;
-  /* justify-content: space-between; */
   background: rgba(0, 0, 0, 0.2);
 }
-.rooms-own:hover {
+.rooms:hover {
   background: rgba(0, 0, 0, 0.1);
 }
 .roomname-link {
   display: block;
   width: 100%;
   height: 50px;
-  display: flex;
   align-items: center;
+  display: flex;
 }
 .roomicon img {
   width: 40px;
   height: 40px;
-  margin: 0 0.5em;
+  margin-left: 0.5em;
   border-radius: 50%;
   object-fit: cover;
   position: relative;
 }
-e {
-  display: block;
-  padding: 0.6em;
-  width: 90%;
+.roomname {
+  margin-left: 0.5em;
 }
 </style>
