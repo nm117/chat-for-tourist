@@ -7,8 +7,9 @@ Fair information to all tourists.</p>
 
 # Demo
 ### https://we-locals.com/
-### For guest - Login with "I am a guest" button on Signin or Signup page!  
+**For guest - Login with "I am a guest" button on Signin or Signup page!**
 
+  
 #Home  
 <img width="1439" alt="スクリーンショット 2021-06-10 17 56 59" src="https://user-images.githubusercontent.com/68658343/121497821-c9e12980-ca16-11eb-93ae-c300cb7d58a8.png">
   
