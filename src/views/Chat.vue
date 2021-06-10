@@ -349,12 +349,12 @@ export default {
 }
 .humberger {
   font-size: 1.3em;
-  padding: 0 0.5em;
+  padding: 0 1em;
 }
 .humberger-open {
   position: absolute;
   height: 45px;
-  top: 100px;
+  top: 50px;
   right: 22px;
   cursor: pointer;
   border-radius: 10px;
@@ -371,6 +371,7 @@ export default {
   border-right: 10px solid transparent;
   top: -12px;
   right: 8px;
+  font-weight: bold;
   content: "";
 }
 .chats {
@@ -499,6 +500,14 @@ button {
   width: 35px;
   height: 35px;
 }
+.humberger-open {
+  top: 100px;
+  right: 22px;
+}
+.humberger-open:after {
+  top: -12px;
+  right: 8px;
+}
 }
 @media (min-width: 1025px) {
 .room-list {
@@ -538,6 +547,14 @@ button {
 .chat-avatar img {
   width: 35px;
   height: 35px;
+}
+.humberger-open {
+  top: 100px;
+  right: 22px;
+}
+.humberger-open:after {
+  top: -12px;
+  right: 8px;
 }
 }
 </style>
