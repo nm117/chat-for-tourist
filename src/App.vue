@@ -183,17 +183,32 @@ li {
   text-decoration: underline;
 }
 .pref-roomnames, .room-roomnames, .my-roomnames {
-  color: black;
   width: 90%;
   text-decoration: none;
-  text-align: center;
-  margin-bottom: 0.8em;
-  position: relative;
-  display: inline-block;
-  padding: 0.8em;
+  align-items: center;
   background: rgb(235, 235, 235);
   border-radius: 4px;
-  line-height: 1.2em;
+  /* line-height: 1.2em; */
+  height: 50px;
+  display: flex;
+  margin: 0.8em auto;
+}
+.room-roomicon img {
+  width: 40px;
+  height: 40px;
+  margin: 0.6em;
+  border-radius: 50%;
+  object-fit: cover;
+  position: relative;
+}
+.roomlist-title {
+  text-align: center;
+}
+.pref-list {
+  font-size: 1.2em;
+  margin: 1% auto 1% 10%;
+  text-decoration: underline;
+  font-weight: bold;
 }
 @media (min-width: 600px) {
 .pref-roomnames, .room-roomnames, .my-roomnames {
@@ -203,6 +218,9 @@ li {
 @media (min-width: 1025px) {
 .pref-roomnames, .room-roomnames, .my-roomnames {
   width: 500px;
+}
+.pref-list {
+  margin: 1% auto 1% 20%;
 }
 }
 </style>

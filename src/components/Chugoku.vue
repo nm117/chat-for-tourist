@@ -1,26 +1,41 @@
 <template>
   <div id="room-chugoku">
-    <h1>Chugoku Region</h1>
+    <h1 class="roomlist-title">Chugoku Region</h1>
 
-    <p><router-link to="/okayama" class="pref-link">▶︎ Okayama</router-link></p>
+    <p class="pref-list"><router-link to="/okayama" class="pref-link">Okayama</router-link></p>
     <div v-for="(room, id) in okayamaRooms" :key="id" class="rooms">
-      <router-link :to="{ name: 'Chat', params: { id: id }}" class="room-roomnames">{{ room.roomname }}</router-link>
+      <router-link :to="{ name: 'Chat', params: { id: id }}" class="room-roomnames">
+        <div class="room-roomicon"><img :src="room.roomIcon" /></div>
+        {{ room.roomname }}
+      </router-link>
     </div>
-    <p><router-link to="/hiroshima" class="pref-link">▶︎ Kanagawa</router-link></p>
+    <p class="pref-list"><router-link to="/hiroshima" class="pref-link">Kanagawa</router-link></p>
     <div v-for="(room, id) in hiroshimaRooms" :key="id" class="rooms">
-      <router-link :to="{ name: 'Chat', params: { id: id }}" class="room-roomnames">{{ room.roomname }}</router-link>
+      <router-link :to="{ name: 'Chat', params: { id: id }}" class="room-roomnames">
+        <div class="room-roomicon"><img :src="room.roomIcon" /></div>
+        {{ room.roomname }}
+      </router-link>
     </div>
-    <p><router-link to="/shimane" class="pref-link">▶︎ Chiba</router-link></p>
+    <p class="pref-list"><router-link to="/shimane" class="pref-link">Chiba</router-link></p>
     <div v-for="(room, id) in shimaneRooms" :key="id" class="rooms">
-      <router-link :to="{ name: 'Chat', params: { id: id }}" class="room-roomnames">{{ room.roomname }}</router-link>
+      <router-link :to="{ name: 'Chat', params: { id: id }}" class="room-roomnames">
+        <div class="room-roomicon"><img :src="room.roomIcon" /></div>
+        {{ room.roomname }}
+      </router-link>
     </div>
-    <p><router-link to="/tottori" class="pref-link">▶︎ Saitama</router-link></p>
+    <p class="pref-list"><router-link to="/tottori" class="pref-link">Saitama</router-link></p>
     <div v-for="(room, id) in tottoriRooms" :key="id" class="rooms">
-      <router-link :to="{ name: 'Chat', params: { id: id }}" class="room-roomnames">{{ room.roomname }}</router-link>
+      <router-link :to="{ name: 'Chat', params: { id: id }}" class="room-roomnames">
+        <div class="room-roomicon"><img :src="room.roomIcon" /></div>
+        {{ room.roomname }}
+      </router-link>
     </div>
-    <p><router-link to="/yamaguchi" class="pref-link">▶︎ Ibaraki</router-link></p>
+    <p class="pref-list"><router-link to="/yamaguchi" class="pref-link">Ibaraki</router-link></p>
     <div v-for="(room, id) in yamaguchiRooms" :key="id" class="rooms">
-      <router-link :to="{ name: 'Chat', params: { id: id }}" class="room-roomnames">{{ room.roomname }}</router-link>
+      <router-link :to="{ name: 'Chat', params: { id: id }}" class="room-roomnames">
+        <div class="room-roomicon"><img :src="room.roomIcon" /></div>
+        {{ room.roomname }}
+      </router-link>
     </div>
 
   </div>
@@ -84,14 +99,3 @@
     },
   };
 </script>
-
-<style scoped>
-* :not(p) {
-  box-sizing: border-box;
-  text-align: center;
-}
-p {
-  font-size: 1.2em;
-  margin: 1% auto 1% 10%;
-}
-</style>

@@ -1,34 +1,55 @@
 <template>
   <div id="room-kanto">
-    <h1>Kanto Region</h1>
+    <h1 class="roomlist-title">Kanto Region</h1>
 
-    <p><router-link to="/tokyo" class="pref-link">▶︎ Tokyo</router-link></p>
+    <p class="pref-list"><router-link to="/tokyo" class="pref-link">Tokyo</router-link></p>
     <div v-for="(room, id) in tokyoRooms" :key="id" class="rooms">
-      <router-link :to="{ name: 'Chat', params: { id: id }}" class="room-roomnames">{{ room.roomname }}</router-link>
+      <router-link :to="{ name: 'Chat', params: { id: id }}" class="room-roomnames">
+        <div class="room-roomicon"><img :src="room.roomIcon" /></div>
+        {{ room.roomname }}
+      </router-link>
     </div>
-    <p><router-link to="/kanagawa" class="pref-link">▶︎ Kanagawa</router-link></p>
+    <p class="pref-list"><router-link to="/kanagawa" class="pref-link">Kanagawa</router-link></p>
     <div v-for="(room, id) in kanagawaRooms" :key="id" class="rooms">
-      <router-link :to="{ name: 'Chat', params: { id: id }}" class="room-roomnames">{{ room.roomname }}</router-link>
+      <router-link :to="{ name: 'Chat', params: { id: id }}" class="room-roomnames">
+        <div class="room-roomicon"><img :src="room.roomIcon" /></div>
+        {{ room.roomname }}
+      </router-link>
     </div>
-    <p><router-link to="/chiba" class="pref-link">▶︎ Chiba</router-link></p>
+    <p class="pref-list"><router-link to="/chiba" class="pref-link">Chiba</router-link></p>
     <div v-for="(room, id) in chibaRooms" :key="id" class="rooms">
-      <router-link :to="{ name: 'Chat', params: { id: id }}" class="room-roomnames">{{ room.roomname }}</router-link>
+      <router-link :to="{ name: 'Chat', params: { id: id }}" class="room-roomnames">
+        <div class="room-roomicon"><img :src="room.roomIcon" /></div>
+        {{ room.roomname }}
+      </router-link>
     </div>
-    <p><router-link to="/saitama" class="pref-link">▶︎ Saitama</router-link></p>
+    <p class="pref-list"><router-link to="/saitama" class="pref-link">Saitama</router-link></p>
     <div v-for="(room, id) in saitamaRooms" :key="id" class="rooms">
-      <router-link :to="{ name: 'Chat', params: { id: id }}" class="room-roomnames">{{ room.roomname }}</router-link>
+      <router-link :to="{ name: 'Chat', params: { id: id }}" class="room-roomnames">
+        <div class="room-roomicon"><img :src="room.roomIcon" /></div>
+        {{ room.roomname }}
+      </router-link>
     </div>
-    <p><router-link to="/ibaraki" class="pref-link">▶︎ Ibaraki</router-link></p>
+    <p class="pref-list"><router-link to="/ibaraki" class="pref-link">Ibaraki</router-link></p>
     <div v-for="(room, id) in ibarakiRooms" :key="id" class="rooms">
-      <router-link :to="{ name: 'Chat', params: { id: id }}" class="room-roomnames">{{ room.roomname }}</router-link>
+      <router-link :to="{ name: 'Chat', params: { id: id }}" class="room-roomnames">
+        <div class="room-roomicon"><img :src="room.roomIcon" /></div>
+        {{ room.roomname }}
+      </router-link>
     </div>
-    <p><router-link to="/gunma" class="pref-link">▶︎ Gunma</router-link></p>
+    <p class="pref-list"><router-link to="/gunma" class="pref-link">Gunma</router-link></p>
     <div v-for="(room, id) in gunmaRooms" :key="id" class="rooms">
-      <router-link :to="{ name: 'Chat', params: { id: id }}" class="room-roomnames">{{ room.roomname }}</router-link>
+      <router-link :to="{ name: 'Chat', params: { id: id }}" class="room-roomnames">
+        <div class="room-roomicon"><img :src="room.roomIcon" /></div>
+        {{ room.roomname }}
+      </router-link>
     </div>
-    <p><router-link to="/tochigi" class="pref-link">▶︎ Tochigi</router-link></p>
+    <p class="pref-list"><router-link to="/tochigi" class="pref-link">Tochigi</router-link></p>
     <div v-for="(room, id) in tochigiRooms" :key="id" class="rooms">
-      <router-link :to="{ name: 'Chat', params: { id: id }}" class="room-roomnames">{{ room.roomname }}</router-link>
+      <router-link :to="{ name: 'Chat', params: { id: id }}" class="room-roomnames">
+        <div class="room-roomicon"><img :src="room.roomIcon" /></div>
+        {{ room.roomname }}
+      </router-link>
     </div>
 
   </div>
@@ -108,14 +129,3 @@
     },
   };
 </script>
-
-<style scoped>
-* :not(p) {
-  box-sizing: border-box;
-  text-align: center;
-}
-p {
-  font-size: 1.2em;
-  margin: 1% auto 1% 10%;
-}
-</style>

@@ -5,8 +5,8 @@
     </div>
 
     <div class="chat-room">
-      <div class="roomname">
-        <router-link :to="{ name: 'Roominfo', params: { id: id } }">
+      <div class="room-title">
+        <router-link :to="{ name: 'Roominfo', params: { id: id } }" class="roomname">
           {{ roomname }} {{ '(' + joinIds + ')' }}
         </router-link>
         <span
@@ -330,18 +330,51 @@ export default {
 .room-list {
   display: none;
 }
-.roomname {
+.room-title {
   width: 100%;
-  min-height: 3em;
+  height: 3em;
   padding: 0.5em;
   margin-bottom: 1em;
-  font-weight: bold;
   background: #f3f4f6;
   display: flex;
   justify-content: space-between;
+  position: fixed;
+}
+.roomname {
+  width: 300px;
+  font-weight: bold;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.humberger {
+  font-size: 1.3em;
+  padding: 0 0.5em;
+}
+.humberger-open {
+  position: absolute;
+  height: 45px;
+  top: 100px;
+  right: 22px;
+  cursor: pointer;
+  border-radius: 10px;
+  color: white;
+  display: block;
+  padding: 0.6em;
+  background: rgba(0, 0, 0, 0.75);
+  z-index: 5;
+}
+.humberger-open:after {
+  position: absolute;
+  border-bottom: 12px solid rgba(0, 0, 0, 0.75);
+  border-left: 10px solid transparent;
+  border-right: 10px solid transparent;
+  top: -12px;
+  right: 8px;
+  content: "";
 }
 .chats {
-  height: calc(100vh - 255px);
+  height: calc(100vh - 178px);
   overflow-y: auto;
 }
 button {
@@ -378,6 +411,8 @@ button {
   background: #efefef;
   max-width: 60%;
   white-space: pre-wrap;
+  word-wrap : break-word;
+  overflow-wrap : break-word;
 }
 .chat-message-own {
   background: #deefe8;
@@ -417,36 +452,10 @@ button {
 .chat-avatar {
   margin-right: 0.6em;
 }
-.humberger {
-  font-size: 1.3em;
-  padding: 0 1em;
-}
-.humberger-open {
-  position: absolute;
-  height: 45px;
-  top: 100px;
-  right: 22px;
-  cursor: pointer;
-  border-radius: 10px;
-  color: white;
-  display: block;
-  padding: 0.6em;
-  background: rgba(0, 0, 0, 0.75);
-  z-index: 5;
-}
-.humberger-open:after {
-  position: absolute;
-  border-bottom: 12px solid rgba(0, 0, 0, 0.75);
-  border-left: 10px solid transparent;
-  border-right: 10px solid transparent;
-  top: -12px;
-  right: 8px;
-  content: "";
-}
 .chat-avatar-own img,
 .chat-avatar img {
-  width: 35px;
-  height: 35px;
+  width: 25px;
+  height: 25px;
   border-radius: 50%;
   object-fit: cover;
   cursor: pointer;
@@ -468,11 +477,13 @@ button {
   width: 100% - 280px;
   margin: 0 0 0 280px;
 }
-.roomname {
+.room-title {
   height: 3em;
   padding: 0.5em 0.5em 0.6em 0;
+  width: 100%;
   margin-bottom: 1em;
   justify-content: flex-end;
+  position: static;
 }
 .chat-item {
   margin: 0 0 0.7em 2em;
@@ -482,6 +493,11 @@ button {
 }
 .chats {
   height: calc(100vh - 242px);
+}
+.chat-avatar-own img,
+.chat-avatar img {
+  width: 35px;
+  height: 35px;
 }
 }
 @media (min-width: 1025px) {
@@ -497,11 +513,17 @@ button {
   width: 100% - 280px;
   margin: 0 0 0 280px;
 }
-.roomname {
+.room-title {
   height: 3em;
   padding: 0.5em 0.5em 0.6em 0;
+  width: 100%;
   margin-bottom: 1em;
   justify-content: flex-end;
+  position: static;
+}
+.roomname {
+  width: 600px;
+  text-align: right;
 }
 .chat-item {
   margin: 0 0 0.7em 2em;
@@ -511,6 +533,11 @@ button {
 }
 .chats {
   height: calc(100vh - 242px);
+}
+.chat-avatar-own img,
+.chat-avatar img {
+  width: 35px;
+  height: 35px;
 }
 }
 </style>
