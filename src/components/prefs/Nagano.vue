@@ -3,9 +3,12 @@
     <div class="pref-nagano">
       <h1>Nagano</h1>
       <router-link :to="{name: 'CreateRoom', params: { value: 'Nagano' }}" class="pref-create">Create your chatroom in Nagano page</router-link>
-      <div v-for="(room, id) in rooms" :key="id" class="rooms">
-        <router-link :to="{ name: 'Chat', params: { id: id }}" class="pref-roomnames">{{ room.roomname }}</router-link>
-      </div>
+        <div v-for="(room, id) in rooms" :key="id" class="rooms">
+          <router-link :to="{ name: 'Chat', params: { id: id }}" class="room-roomnames">
+            <div class="room-roomicon"><img :src="room.roomIcon" /></div>
+            {{ room.roomname }}
+          </router-link>
+        </div>
     </div>
   </div>
 </template>

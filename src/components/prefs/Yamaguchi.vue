@@ -3,9 +3,7 @@
     <div class="pref-yamaguchi">
       <h1>Yamaguchi</h1>
       <router-link :to="{name: 'CreateRoom', params: { value: 'Yamaguchi' }}" class="pref-create">Create your chatroom in Yamaguchi page</router-link>
-      <div v-for="(room, id) in rooms" :key="id" class="rooms">
-        <router-link :to="{ name: 'Chat', params: { id: id }}" class="pref-roomnames">{{ room.roomname }}</router-link>
-      </div>
+      
     </div>
   </div>
 </template>

@@ -7,8 +7,8 @@
       class="rooms"
     >
       <router-link :to="{ name: 'Chat', params: { id: id } }" class="my-roomnames">
-        <!-- photo -->
-        <span class="my-roomname">{{ room.roomname }}</span>
+        <div class="room-roomicon"><img :src="room.roomIcon" /></div>
+        {{ room.roomname }}
       </router-link>
     </div>
   </div>
@@ -50,10 +50,8 @@ export default {
 </script>
 
 <style scoped>
-#my-room {
-  text-align: center;
-}
 h1 {
   margin-bottom: 1em;
+  text-align: center;
 }
 </style>

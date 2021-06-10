@@ -3,9 +3,12 @@
     <div class="pref-niigata">
       <h1>Niigata</h1>
       <router-link :to="{name: 'CreateRoom', params: { value: 'Niigata' }}" class="pref-create">Create your chatroom in Niigata page</router-link>
-      <div v-for="(room, id) in rooms" :key="id" class="rooms">
-        <router-link :to="{ name: 'Chat', params: { id: id }}" class="pref-roomnames">{{ room.roomname }}</router-link>
-      </div>
+        <div v-for="(room, id) in rooms" :key="id" class="rooms">
+          <router-link :to="{ name: 'Chat', params: { id: id }}" class="room-roomnames">
+            <div class="room-roomicon"><img :src="room.roomIcon" /></div>
+            {{ room.roomname }}
+          </router-link>
+        </div>
     </div>
   </div>
 </template>

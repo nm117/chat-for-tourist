@@ -1,30 +1,48 @@
 <template>
   <div id="room-tohoku">
-    <h1>Tohoku Region</h1><br>
+    <h1 class="roomlist-title">Tohoku Region</h1><br>
 
-    <p><router-link to="/aomori" class="pref-link">▶ Aomori</router-link></p>
+    <p class="pref-list"><router-link to="/aomori" class="pref-link">Aomori</router-link></p>
     <div v-for="(room, id) in aomoriRooms" :key="id" class="rooms">
-      <router-link :to="{ name: 'Chat', params: { id: id }}" class="room-roomnames">{{ room.roomname }}</router-link>
+      <router-link :to="{ name: 'Chat', params: { id: id }}" class="room-roomnames">
+        <div class="room-roomicon"><img :src="room.roomIcon" /></div>
+        {{ room.roomname }}
+      </router-link>
     </div>
-    <p><router-link to="/akita" class="pref-link">▶︎ Akita</router-link></p>
+    <p class="pref-list"><router-link to="/akita" class="pref-link">Akita</router-link></p>
     <div v-for="(room, id) in akitaRooms" :key="id" class="rooms">
-      <router-link :to="{ name: 'Chat', params: { id: id }}" class="room-roomnames">{{ room.roomname }}</router-link>
+      <router-link :to="{ name: 'Chat', params: { id: id }}" class="room-roomnames">
+        <div class="room-roomicon"><img :src="room.roomIcon" /></div>
+        {{ room.roomname }}
+      </router-link>
     </div>
-    <p><router-link to="/iwate" class="pref-link">▶︎ Iwate</router-link></p>
+    <p class="pref-list"><router-link to="/iwate" class="pref-link">Iwate</router-link></p>
     <div v-for="(room, id) in iwateRooms" :key="id" class="rooms">
-      <router-link :to="{ name: 'Chat', params: { id: id }}" class="room-roomnames">{{ room.roomname }}</router-link>
+      <router-link :to="{ name: 'Chat', params: { id: id }}" class="room-roomnames">
+        <div class="room-roomicon"><img :src="room.roomIcon" /></div>
+        {{ room.roomname }}
+      </router-link>
     </div>
-    <p><router-link to="/yamagata" class="pref-link">▶︎ Yamagata</router-link></p>
+    <p class="pref-list"><router-link to="/yamagata" class="pref-link">Yamagata</router-link></p>
     <div v-for="(room, id) in yamagataRooms" :key="id" class="rooms">
-      <router-link :to="{ name: 'Chat', params: { id: id }}" class="room-roomnames">{{ room.roomname }}</router-link>
+      <router-link :to="{ name: 'Chat', params: { id: id }}" class="room-roomnames">
+        <div class="room-roomicon"><img :src="room.roomIcon" /></div>
+        {{ room.roomname }}
+      </router-link>
     </div>
-    <p><router-link to="/miyagi" class="pref-link">▶︎ Miyagi</router-link></p>
+    <p class="pref-list"><router-link to="/miyagi" class="pref-link">Miyagi</router-link></p>
     <div v-for="(room, id) in miyagiRooms" :key="id" class="rooms">
-      <router-link :to="{ name: 'Chat', params: { id: id }}" class="room-roomnames">{{ room.roomname }}</router-link>
+      <router-link :to="{ name: 'Chat', params: { id: id }}" class="room-roomnames">
+        <div class="room-roomicon"><img :src="room.roomIcon" /></div>
+        {{ room.roomname }}
+      </router-link>
     </div>
-    <p><router-link to="/fukushima" class="pref-link">▶︎ Fukushima</router-link></p>
+    <p class="pref-list"><router-link to="/fukushima" class="pref-link">Fukushima</router-link></p>
     <div v-for="(room, id) in fukushimaRooms" :key="id" class="rooms">
-      <router-link :to="{ name: 'Chat', params: { id: id }}" class="room-roomnames">{{ room.roomname }}</router-link>
+      <router-link :to="{ name: 'Chat', params: { id: id }}" class="room-roomnames">
+        <div class="room-roomicon"><img :src="room.roomIcon" /></div>
+        {{ room.roomname }}
+      </router-link>
     </div>
 
   </div>
@@ -48,7 +66,7 @@
       };
     },
     created() {
-      this.roomsRef = firebase.firestore().collection("rooms").where("prefecture", "==", "Aomori", "Akita", "Iwate", "Yamagata", "Miyagi", "Fukushima");
+      this.roomsRef = firebase.firestore().collection("rooms");
 
       this.roomsRef.where("prefecture", "==", "Aomori").onSnapshot((querySnapshot) => {
         const obj1 = {};
@@ -96,14 +114,3 @@
     },
   };
 </script>
-
-<style scoped>
-* :not(p) {
-  box-sizing: border-box;
-  text-align: center;
-}
-p {
-  font-size: 1.2em;
-  margin: 1% auto 1% 10%;
-}
-</style>

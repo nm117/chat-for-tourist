@@ -3,9 +3,12 @@
     <div class="pref-tokushima">
       <h1>Tokushima</h1>
       <router-link :to="{name: 'CreateRoom', params: { value: 'Tokushima' }}" class="pref-create">Create your chatroom in Tokushima page</router-link>
-      <div v-for="(room, id) in rooms" :key="id" class="rooms">
-        <router-link :to="{ name: 'Chat', params: { id: id }}" class="pref-roomnames">{{ room.roomname }}</router-link>
-      </div>
+        <div v-for="(room, id) in rooms" :key="id" class="rooms">
+          <router-link :to="{ name: 'Chat', params: { id: id }}" class="room-roomnames">
+            <div class="room-roomicon"><img :src="room.roomIcon" /></div>
+            {{ room.roomname }}
+          </router-link>
+        </div>
     </div>
   </div>
 </template>
