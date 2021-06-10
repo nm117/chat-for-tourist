@@ -1,6 +1,9 @@
-# Web Chat App<div align="right"><img width="220" alt="locals_write" src="https://user-images.githubusercontent.com/68658343/121501615-5b05cf80-ca1a-11eb-8be5-a18ff2893971.png"></div>
-Tourists and locals can communicate by this chat service.  
-Fair information to all tourists.
+<h1 align="center">
+  <img width="220" alt="locals_write" src="https://user-images.githubusercontent.com/68658343/121501615-5b05cf80-ca1a-11eb-8be5-a18ff2893971.png"><br/>
+  Web Chat App
+</h1>
+<p align="center">Tourists and locals can communicate by this chat service.<br />
+Fair information to all tourists.</p>
 
 # Demo
 ### https://we-locals.com/
