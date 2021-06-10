@@ -3,7 +3,7 @@
     <nav>
       <template v-if="isAuthenticated">
         <div class="nav-left">
-          <router-link to="/top" class="title">locals</router-link>
+          <router-link to="/top" class="title"><img src="@/assets/locals_transparent.png" class="locals-logo" alt="locals_logo" /></router-link>
         </div>
         <div class="nav-right">
           <router-link to="/myroom" class="my-roomlist">My Roomlist</router-link>
@@ -19,7 +19,7 @@
 
       <template v-else>
         <div class="nav-left">
-          <router-link to="/" class="title">locals</router-link>
+          <router-link to="/"><img src="@/assets/locals_transparent.png" class="locals-logo" alt="locals_logo" /></router-link>
         </div>
         <div class="nav-right">
           <router-link to="/signin" class="signin-button">SIGN IN</router-link>
@@ -90,11 +90,15 @@ export default {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
+.locals-logo {
+  margin-top: 5px;
+  width: 110px;
+}
 nav {
   background: #66BAB7;
   height: 3.5em;
   width: 100%;
-  padding: 0 1em;
+  padding: 0 1.5em 0 0.5em;
   position: fixed;
   display: flex;
   justify-content: space-between;
